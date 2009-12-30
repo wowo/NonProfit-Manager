@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" initialize="application1_initializeHandler(event)">
+	<mx:DataGrid id="grid" />
+	<mx:RemoteObject  id="test" endpoint="http://10.0.2.2:8000/gateway/" 
+		destination="Members" result="test_resultHandler(event)" 
+		fault="test_faultHandler(event)"/>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+
+			protected function test_resultHandler(event:ResultEvent):void
+			 {
+			 	grid.dataProvider = event.result;
+			 }
+			
+			 protected function test_faultHandler(event:FaultEvent):void
+			 {
+			 	Alert.show(event.fault.faultDetail);
+			 }
+			
+			 protected function application1_initializeHandler(event:FlexEvent):void
+			 {
+			 	test.getAllItems();
+			 }
+
+		]]>
+	</mx:Script>
+
+</mx:Application>

@@ -34,3 +34,7 @@ class Member(models.Model):
   membershipType= models.CharField("Typ członkowstwa", max_length=1, choices=membershipTypeEnum, default='C')
   comments = models.TextField("Uwagi", blank=True, null=True)
   sections = models.ManyToManyField(Section)
+
+def getAllItems(self):
+  rows = Member.objects.all()
+  return rows
