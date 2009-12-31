@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" initialize="application1_initializeHandler(event)">
-	<mx:DataGrid id="grid" />
 	<mx:RemoteObject  id="test" endpoint="http://10.0.2.2:8000/gateway/" 
 		destination="Members" result="test_resultHandler(event)" 
 		fault="test_faultHandler(event)"/>
@@ -28,5 +27,46 @@
 
 		]]>
 	</mx:Script>
+	<mx:HBox left="10" right="10" bottom="10" top="10">
+		<mx:Accordion width="150" height="100%">
+			<mx:Canvas label="Członkowie" width="100%" height="100%">
+				<mx:Button y="10" label="Lista członków" id="memberListButton" labelPlacement="right" right="10" left="10" cornerRadius="0">
+					<mx:icon>@Embed(source='..//icons/application_view_list.png')</mx:icon>
+				</mx:Button>
+				<mx:Button y="40" label="Dodaj nowego" left="10" right="10" icon="@Embed(source='..//icons/user_add.png')" cornerRadius="0"/>
+			</mx:Canvas>
+			<mx:Canvas label="Sekcje" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Władze" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Odznaczenia" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Szkolenia" width="100%" height="100%">
+			</mx:Canvas>
+			<mx:Canvas label="Spotkania" width="100%" height="100%">
+			</mx:Canvas>
+		</mx:Accordion>
+		<mx:VBox width="100%" height="100%">
+			<mx:Panel title="Członkowie"  width="100%" height="100%">
+				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20">
+					<mx:columns>
+					  <mx:DataGridColumn id="idColumn" dataField="id" headerText="ID" width="40"/>
+					  <mx:DataGridColumn id="idName" dataField="name" headerText="Imię" />
+					  <mx:DataGridColumn id="idSurname" dataField="surname" headerText="Nazwisko"/>
+					  <mx:DataGridColumn id="idFatherName" dataField="fatherName" headerText="Imię ojca"/>
+					  <mx:DataGridColumn id="idBirthDate" dataField="birthDate" headerText="Data urodzenia"/>
+					  <mx:DataGridColumn id="idPesel" dataField="pesel" headerText="Pesel"/>
+					  <mx:DataGridColumn id="idPhone" dataField="phone" headerText="Numer telefonu"/>
+					  <mx:DataGridColumn id="idEmail" dataField="email" headerText="Adres e-mail"/>
+					  <mx:DataGridColumn id="idGgNumber" dataField="ggNumber" headerText="Numer gadu gadu"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:ControlBar width="100%" height="41" >
+					<mx:Label text="Ilość obiektów"/>
+					<mx:TextInput width="26" id="objectsCountInput" text="?"/>
+				</mx:ControlBar>
+			</mx:Panel>
+		</mx:VBox>
+	</mx:HBox>
 
 </mx:Application>
