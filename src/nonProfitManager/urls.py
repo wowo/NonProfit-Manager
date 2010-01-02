@@ -8,4 +8,5 @@ admin.autodiscover()
 urlpatterns = patterns('',
   (r'^admin/', include(admin.site.urls)),
   ('^gateway/$', gateway.echoGateway),
+  (r'^(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 )

@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" initialize="application1_initializeHandler(event)">
-	<mx:RemoteObject  id="test" endpoint="http://10.0.2.2:8000/gateway/" 
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:RemoteObject  id="membersRO" endpoint="http://127.0.0.1:8000/gateway/" 
 		destination="Members" result="test_resultHandler(event)" 
 		fault="test_faultHandler(event)"/>
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.controls.Button;
+			import mx.states.AddChild;
+			import mx.controls.DateChooser;
+			import mx.controls.TextInput;
+			import mx.controls.Label;
+			import mx.containers.HBox;
+			import mx.containers.VBox;
+			import mx.managers.PopUpManager;
+			import mx.containers.TitleWindow;
+			import mx.containers.Panel;
+			import mx.events.ListEvent;
+			import mx.binding.utils.BindingUtils;
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent;
 
+			import models.*;
+			
+			public var window:TitleWindow;
+			public var nameInput:TextInput = new TextInput();
+			public var surnameInput:TextInput = new TextInput();
+			public var fatherNameInput:TextInput = new TextInput();
+			public var birthDateInput:DateChooser = new DateChooser();
+			
+			[Bindable] 
+			public var rowsCount:Number = 0;
+			
 			protected function test_resultHandler(event:ResultEvent):void
 			 {
 			 	grid.dataProvider = event.result;
+			 	rowsCount = -1;//event.target.rowsCount;
 			 }
 			
 			 protected function test_faultHandler(event:FaultEvent):void
@@ -22,7 +47,93 @@
 			
 			 protected function application1_initializeHandler(event:FlexEvent):void
 			 {
-			 	test.getAllItems();
+			 	membersRO.getAllItems();
+			 }
+			 
+			 protected function saveMember(event:MouseEvent):void
+			 {
+ 				var newMember:Member = new Member();
+ 				with (newMember) {
+ 					name = nameInput.valueOf();
+ 					surname = surnameInput.valueOf();
+ 					fatherName = fatherNameInput.valueOf();
+ 					birthDate = birthDateInput.valueOf();
+ 				}
+ 				//newMember.save()
+			 	Alert.show("Save member");
+			 }
+			 
+			 private function removeMe(event:CloseEvent):void 
+			 {
+                PopUpManager.removePopUp(window);
+                
+             }
+             
+			 protected function dodajCzlonka(event:MouseEvent):void
+			 {
+   				//define title window
+                window = new TitleWindow();
+	        	window.title = "Dodaj członka";
+	        	window.showCloseButton = true;
+	        	window.addEventListener(CloseEvent.CLOSE, removeMe);
+	        	var v:VBox = new VBox();
+	        	
+ 				var member:Member = new Member();
+ 				/*
+	        	for (property in member) {
+	        		var hbox:HBox = new HBox();
+	        		var label:Label = new Label();
+	        		label.text = property;
+	        		hbox.AddChild(label);
+	        		if (member[property] is String) {
+	        			hbox.AddChild(new TextInput());
+	        		} else {
+	        			hbox.AddChild(new DateChooser());
+	        		}
+	        		vbox.AddChild(hbox);
+	        	} 
+	        	*/
+        		var h1:HBox = new HBox();
+        		var l1:Label = new Label();
+        		l1.text = "Imię";
+        		h1.addChild(l1);
+        		h1.addChild(nameInput);
+        		v.addChild(h1);
+        		
+        		var h2:HBox = new HBox();
+        		var l2:Label = new Label();
+        		l2.text = "Nazwisko";
+        		h2.addChild(l2);
+        		h2.addChild(surnameInput);
+        		v.addChild(h2);
+        		
+        		var h3:HBox = new HBox();
+        		var l3:Label = new Label();
+        		l3.text = "Imię ojca";
+        		h3.addChild(l3);
+        		h3.addChild(fatherNameInput);
+        		v.addChild(h3);
+        		
+        		var h4:HBox = new HBox();
+        		var l4:Label = new Label();
+        		l4.text = "Data urodzenia";
+        		h4.addChild(l4);
+        		h4.addChild(birthDateInput);
+        		v.addChild(h4);
+        		
+        		var h5:HBox = new HBox();
+        		var saveButton:Button = new Button();
+        		saveButton.label = "Zapisz";
+        		saveButton.addEventListener(MouseEvent.CLICK, saveMember);
+        		h5.addChild(saveButton);
+        		v.addChild(h5);
+        		
+	        	window.addChild(v);
+ 
+ 				//window.addChild(panel);
+ 
+		        TitleWindow(PopUpManager.addPopUp(window, this,true));
+		        PopUpManager.centerPopUp(window);
 			 }
 
 		]]>
@@ -30,10 +141,12 @@
 	<mx:HBox left="10" right="10" bottom="10" top="10">
 		<mx:Accordion width="150" height="100%">
 			<mx:Canvas label="Członkowie" width="100%" height="100%">
-				<mx:Button y="10" label="Lista członków" id="memberListButton" labelPlacement="right" right="10" left="10" cornerRadius="0">
+				<mx:Button y="10" label="Lista członków" labelPlacement="right" right="10" left="10" cornerRadius="0">
 					<mx:icon>@Embed(source='..//icons/application_view_list.png')</mx:icon>
 				</mx:Button>
-				<mx:Button y="40" label="Dodaj nowego" left="10" right="10" icon="@Embed(source='..//icons/user_add.png')" cornerRadius="0"/>
+				<mx:Button y="40" label="Dodaj członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="dodajCzlonka(event)">
+					<mx:icon>@Embed(source='..//icons/user_add.png')</mx:icon>
+				</mx:Button>
 			</mx:Canvas>
 			<mx:Canvas label="Sekcje" width="100%" height="100%">
 			</mx:Canvas>
@@ -47,14 +160,15 @@
 			</mx:Canvas>
 		</mx:Accordion>
 		<mx:VBox width="100%" height="100%">
-			<mx:Panel title="Członkowie"  width="100%" height="100%">
-				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20">
+			<mx:Panel title="Rejestr członków"  width="100%" height="100%">
+				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" 
+					initialize="application1_initializeHandler(event)">
 					<mx:columns>
 					  <mx:DataGridColumn id="idColumn" dataField="id" headerText="ID" width="40"/>
 					  <mx:DataGridColumn id="idName" dataField="name" headerText="Imię" />
 					  <mx:DataGridColumn id="idSurname" dataField="surname" headerText="Nazwisko"/>
 					  <mx:DataGridColumn id="idFatherName" dataField="fatherName" headerText="Imię ojca"/>
-					  <mx:DataGridColumn id="idBirthDate" dataField="birthDate" headerText="Data urodzenia"/>
+					  <mx:DataGridColumn id="idBirthDate" dataField="birthDate" headerText="Data urodzenia foo"/>
 					  <mx:DataGridColumn id="idPesel" dataField="pesel" headerText="Pesel"/>
 					  <mx:DataGridColumn id="idPhone" dataField="phone" headerText="Numer telefonu"/>
 					  <mx:DataGridColumn id="idEmail" dataField="email" headerText="Adres e-mail"/>
@@ -63,7 +177,7 @@
 				</mx:DataGrid>
 				<mx:ControlBar width="100%" height="41" >
 					<mx:Label text="Ilość obiektów"/>
-					<mx:TextInput width="26" id="objectsCountInput" text="?"/>
+					<mx:TextInput width="40" text="{rowsCount}"/>
 				</mx:ControlBar>
 			</mx:Panel>
 		</mx:VBox>
