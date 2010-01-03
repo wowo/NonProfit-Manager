@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+import logging
 
 class Section(models.Model):
   def __unicode__(self):
@@ -36,30 +37,13 @@ class Member(models.Model):
   sections = models.ManyToManyField(Section)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
-  """
-  <mx:DataGridColumn id="idColumn" dataField="id" />
-  <mx:DataGridColumn id="idName" dataField="name" />
-  <mx:DataGridColumn id="idSurname" dataField="surname" />
-  <mx:DataGridColumn id="idFatherName" dataField="fatherName" />
-  <mx:DataGridColumn id="idBirthDate" dataField="birthDate" />
-  <mx:DataGridColumn id="idBirthPlace" dataField="birthPlace" />
-  <mx:DataGridColumn id="idOccupation" dataField="occupation" />
-  <mx:DataGridColumn id="idWorkplace" dataField="workplace" />
-  <mx:DataGridColumn id="idAccessionDate" dataField="accessionDate" />
-  <mx:DataGridColumn id="idDismissDate" dataField="dismissDate" />
-  <mx:DataGridColumn id="idFunctions" dataField="functions" />
-  <mx:DataGridColumn id="idAddress" dataField="address" />
-  <mx:DataGridColumn id="idIdentityCardNumber" dataField="identityCardNumber" />
-  <mx:DataGridColumn id="idPesel" dataField="pesel" />
-  <mx:DataGridColumn id="idEmail" dataField="email" />
-  <mx:DataGridColumn id="idPhone" dataField="phone" />
-  <mx:DataGridColumn id="idGgNumber" dataField="ggNumber" />
-  <mx:DataGridColumn id="idMembershipTyp" dataField="membershipType" />
-  <mx:DataGridColumn id="idComments" dataField="comments" />
-  <mx:DataGridColumn id="idSections" dataField="sections" />
-  <mx:DataGridColumn id="idCreatedAt" dataField="createdAt" />
-  <mx:DataGridColumn id="idUpdatedAt" dataField="updatedAt" />
-  """
+
 def getAllItems(self):
   rows = Member.objects.order_by('surname')
   return rows
+
+def save(self, object):
+  logging.debug(object)
+  logging.debug(object.__class__)
+  object.save()
+

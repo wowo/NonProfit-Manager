@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
-	<mx:RemoteObject  id="membersRO" endpoint="http://127.0.0.1:8000/gateway/" 
-		destination="Members" result="test_resultHandler(event)" 
-		fault="test_faultHandler(event)"/>
+	<mx:RemoteObject  id="membersRO" endpoint="http://127.0.0.1:8000/gateway/" destination="Members">
+		<mx:method name="getAllItems" result="test_resultHandler(event)" fault="Alert.show(event.toString())" />
+		<mx:method name="save" result="memberSaveResultHandler(event)" fault="Alert.show(event.toString())"/>
+	</mx:RemoteObject>
 	<mx:Script>
 		<![CDATA[
-			import mx.events.CloseEvent;
-			import mx.controls.Button;
-			import mx.states.AddChild;
-			import mx.controls.DateChooser;
-			import mx.controls.TextInput;
-			import mx.controls.Label;
-			import mx.containers.HBox;
-			import mx.containers.VBox;
-			import mx.managers.PopUpManager;
-			import mx.containers.TitleWindow;
-			import mx.containers.Panel;
-			import mx.events.ListEvent;
-			import mx.binding.utils.BindingUtils;
-			import mx.controls.Alert;
-			import mx.events.FlexEvent;
-			import mx.rpc.events.FaultEvent;
-			import mx.rpc.events.ResultEvent;
-
 			import models.*;
+			
+			import mx.containers.HBox;
+			import mx.containers.Panel;
+			import mx.containers.TitleWindow;
+			import mx.containers.VBox;
+			import mx.controls.Alert;
+			import mx.controls.Button;
+			import mx.controls.DateChooser;
+			import mx.controls.Label;
+			import mx.controls.TextInput;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
 			
 			public var window:TitleWindow;
 			public var nameInput:TextInput = new TextInput();
@@ -35,15 +32,15 @@
 			public var rowsCount:Number = 0;
 			
 			protected function test_resultHandler(event:ResultEvent):void
-			 {
-			 	grid.dataProvider = event.result;
-			 	rowsCount = -1;//event.target.rowsCount;
-			 }
+			{
+				grid.dataProvider = event.result;
+				rowsCount = -1;//event.target.rowsCount;
+			}
 			
-			 protected function test_faultHandler(event:FaultEvent):void
-			 {
-			 	Alert.show(event.fault.faultDetail);
-			 }
+			protected function memberSaveResultHandler(event:ResultEvent):void
+			{
+				
+			}
 			
 			 protected function application1_initializeHandler(event:FlexEvent):void
 			 {
@@ -53,20 +50,16 @@
 			 protected function saveMember(event:MouseEvent):void
 			 {
  				var newMember:Member = new Member();
- 				with (newMember) {
- 					name = nameInput.valueOf();
- 					surname = surnameInput.valueOf();
- 					fatherName = fatherNameInput.valueOf();
- 					birthDate = birthDateInput.valueOf();
- 				}
- 				//newMember.save()
-			 	Alert.show("Save member");
+				
+				newMember.name = nameInput.text;
+				newMember.surname = surnameInput.text;
+				newMember.fatherName = fatherNameInput.text;
+ 				membersRO.save(newMember);
 			 }
 			 
 			 private function removeMe(event:CloseEvent):void 
 			 {
                 PopUpManager.removePopUp(window);
-                
              }
              
 			 protected function dodajCzlonka(event:MouseEvent):void
