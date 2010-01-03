@@ -1,12 +1,14 @@
 package models
 {
 	[Bindable]
-	[RemoteClass(alias="Member")]	
+	[RemoteClass(alias="models.Member")]	
 	public class Member
 	{
+		public var id:int;
 		public var name:String;
 		public var surname:String;
 		public var fatherName:String;
+		/*
 		public var birthDate:Date;
 		public var birthPlace:String;
 		public var occupation:String;
@@ -23,7 +25,7 @@ package models
 		public var membershipTyp:String;
 		public var comments:String;
 		public var sections:String;
-                                     
+          */                           
 		public function Member()
 		{
 			//TODO: implement function

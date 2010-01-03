@@ -50,7 +50,7 @@
 			 protected function saveMember(event:MouseEvent):void
 			 {
  				var newMember:Member = new Member();
-				
+				newMember.id = 666;
 				newMember.name = nameInput.text;
 				newMember.surname = surnameInput.text;
 				newMember.fatherName = fatherNameInput.text;
