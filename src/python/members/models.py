@@ -39,13 +39,9 @@ class Member(models.Model):
   updatedAt = models.DateTimeField(auto_now=True)
 
 def getAllItems(self):
-  logging.debug('getAllItems method')
   rows = Member.objects.order_by('surname')
   return rows
 
 def save(self, object):
-  logging.debug('save method')
-  logging.debug(object)
-  logging.debug(type(object))
   object.save()
 
