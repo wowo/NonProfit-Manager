@@ -34,7 +34,7 @@ class Member(models.Model):
   ggNumber = models.CharField("Numer Gadu Gadu", max_length=200, blank=True, null=True)
   membershipType= models.CharField("Typ członkowstwa", max_length=1, choices=membershipTypeEnum, default='C')
   comments = models.TextField("Uwagi", blank=True, null=True)
-  sections = models.ManyToManyField(Section)
+#  sections = models.ManyToManyField(Section)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
@@ -42,6 +42,9 @@ def getAllItems(self):
   rows = Member.objects.order_by('surname')
   return rows
 
-def save(self, object):
-  object.save()
+def save(self, member):
+  member.save()
+  return member
 
+def remove(self, member):
+  member.delete()
