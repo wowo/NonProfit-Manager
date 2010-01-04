@@ -137,9 +137,6 @@
 				<mx:Button y="10" label="Lista członków" labelPlacement="right" right="10" left="10" cornerRadius="0">
 					<mx:icon>@Embed(source='..//icons/application_view_list.png')</mx:icon>
 				</mx:Button>
-				<mx:Button y="40" label="Dodaj członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="dodajCzlonka(event)">
-					<mx:icon>@Embed(source='..//icons/user_add.png')</mx:icon>
-				</mx:Button>
 			</mx:Canvas>
 			<mx:Canvas label="Sekcje" width="100%" height="100%">
 			</mx:Canvas>
@@ -161,7 +158,7 @@
 					  <mx:DataGridColumn id="idName" dataField="name" headerText="Imię" />
 					  <mx:DataGridColumn id="idSurname" dataField="surname" headerText="Nazwisko"/>
 					  <mx:DataGridColumn id="idFatherName" dataField="fatherName" headerText="Imię ojca"/>
-					  <mx:DataGridColumn id="idBirthDate" dataField="birthDate" headerText="Data urodzenia foo"/>
+					  <mx:DataGridColumn id="idBirthDate" dataField="birthDate" headerText="Data urodzenia"/>
 					  <mx:DataGridColumn id="idPesel" dataField="pesel" headerText="Pesel"/>
 					  <mx:DataGridColumn id="idPhone" dataField="phone" headerText="Numer telefonu"/>
 					  <mx:DataGridColumn id="idEmail" dataField="email" headerText="Adres e-mail"/>
@@ -171,6 +168,9 @@
 				<mx:ControlBar width="100%" height="41" >
 					<mx:Label text="Ilość obiektów"/>
 					<mx:TextInput width="40" text="{rowsCount}"/>
+					<mx:Button y="40" label="Dodaj członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="dodajCzlonka(event)">
+						<mx:icon>@Embed(source='..//icons/user_add.png')</mx:icon>
+					</mx:Button>
 				</mx:ControlBar>
 			</mx:Panel>
 		</mx:VBox>

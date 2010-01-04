@@ -19,7 +19,6 @@ class Member(models.Model):
   name = models.CharField("Imię", max_length=200)
   surname = models.CharField("Nazwisko", max_length=200)
   fatherName = models.CharField("Imię ojca", max_length=200, blank=True, null=True)
-  """
   birthDate = models.DateField("Data urodzenia")
   birthPlace = models.CharField("Miejsce urodzenia", max_length=200, blank=True, null=True)
   occupation = models.CharField("Zawód", max_length=200, blank=True, null=True)
@@ -38,7 +37,7 @@ class Member(models.Model):
   sections = models.ManyToManyField(Section)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
-"""
+
 def getAllItems(self):
   logging.debug('getAllItems method')
   rows = Member.objects.order_by('surname')
