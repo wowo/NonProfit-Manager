@@ -31,6 +31,11 @@ package models
 		{
 			//TODO: implement function
 		}
+		
+		public function toString():String
+		{
+			return "#" + this.id + " " + this.name + " " + this.surname;
+		}
 
 	}
 }

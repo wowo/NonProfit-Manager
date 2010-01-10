@@ -8,7 +8,6 @@
 			import mx.containers.Panel;
 			import mx.containers.TitleWindow;
 			import mx.containers.VBox;
-			import mx.controls.Alert;
 			import mx.controls.Button;
 			import mx.controls.DateChooser;
 			import mx.controls.Label;
@@ -62,10 +61,22 @@
 				newMember.fatherName = fatherNameInput.text;
 				membersRO.save(newMember);
 			}
-			
-			protected function memberDelete(event:MouseEvent):void
+			protected function memberDeleteConfirm(event:MouseEvent):void
 			{
-				membersRO.remove(selectedItem);
+				var members:String = "";
+				for (var index:Object in grid.selectedItems) {
+					members += "\n\t" + Member(grid.selectedItems[index]).toString();
+				} 
+				mx.controls.Alert.show("Czy napewno usunąć następujących członków?" + members, "Osrzeżenie", 
+					mx.controls.Alert.OK|mx.controls.Alert.CANCEL,this, memberDelete)
+			}
+			protected function memberDelete(event:CloseEvent):void
+			{
+				if(event.detail == mx.controls.Alert.OK) {
+					for (var index:Object in grid.selectedItems) {
+						membersRO.remove(grid.selectedItems[index] as Member);
+					}
+				}
 			}
 			
 			private function removeMe(event:CloseEvent):void 
@@ -82,20 +93,6 @@
 				var v:VBox = new VBox();
 				
 				var member:Member = new Member();
-				/*
-				for (property in member) {
-				var hbox:HBox = new HBox();
-				var label:Label = new Label();
-				label.text = property;
-				hbox.AddChild(label);
-				if (member[property] is String) {
-				hbox.AddChild(new TextInput());
-				} else {
-				hbox.AddChild(new DateChooser());
-				}
-				vbox.AddChild(hbox);
-				} 
-				*/
 				var h1:HBox = new HBox();
 				var l1:Label = new Label();
 				l1.text = "Imię";
@@ -145,9 +142,9 @@
 		]]>
 	</mx:Script>
 	<mx:RemoteObject  id="membersRO" endpoint="http://127.0.0.1:8000/gateway/" destination="Members">
-		<mx:method name="getAllItems" result="test_resultHandler(event)" fault="Alert.show(event.toString())" />
-		<mx:method name="save" result="memberSaveResultHandler(event)" fault="Alert.show(event.toString())"/>
-		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="Alert.show(event.toString())"/>
+		<mx:method name="getAllItems" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
+		<mx:method name="save" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
+		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 	</mx:RemoteObject>
 	<mx:HBox left="10" right="10" bottom="10" top="10">
 		<mx:Accordion width="150" height="100%">
@@ -169,7 +166,7 @@
 		</mx:Accordion>
 		<mx:VBox width="100%" height="100%">
 			<mx:Panel title="Rejestr członków"  width="100%" height="100%">
-				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" 
+				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true"
 					initialize="application1_initializeHandler(event)" change="selectHandler(event)">
 					<mx:columns>
 					  <mx:DataGridColumn id="idColumn" dataField="id" headerText="ID" width="40"/>
@@ -189,7 +186,7 @@
 					<mx:Button y="40" label="Dodaj członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="dodajCzlonka(event)">
 						<mx:icon>@Embed(source='..//icons/user_add.png')</mx:icon>
 					</mx:Button>
-					<mx:Button y="40" label="Usuń członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="memberDelete(event)">
+					<mx:Button y="40" label="Usuń członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="memberDeleteConfirm(event)">
 						<mx:icon>@Embed(source='..//icons/user_delete.png')</mx:icon>
 					</mx:Button>
 				</mx:ControlBar>
