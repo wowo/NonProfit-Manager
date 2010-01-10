@@ -1,1 +1,12 @@
-Managment tool for nonProfit organizations
+== Managment tool for nonProfit organizations ==
+
+=== Requirements ===
+ * django framework (sudo apt-get  install python-django)
+ * pyamf python package (sudo easy_install pyamf)
+ * sqllite driver for python (sudo apt-get install python-sqllite)
+ * pyyaml library (sudo easy_install pyyaml)
+
+=== Running nonProfit Manager ===
+ * enter src/python directory
+ * type command: "./manage.py runserver"
+ * open in your browser: "127.0.0.1:8000"
