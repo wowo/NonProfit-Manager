@@ -1,7 +1,7 @@
 package views
 {
-	import flash.events.MouseEvent;
-	
+	import mx.core.Application;
+	import flash.events.MouseEvent;	
 	import models.Member;
 
 	public class Members
@@ -14,10 +14,10 @@ package views
 		{
 			var newMember:Member = new Member();
 			newMember.id = 0;
-			newMember.name = memberFormInstance.nameInput.text;
-			newMember.surname = memberFormInstance.surnameInput.text;
-			newMember.fatherName = memberFormInstance.fatherNameInput.text;
-			membersRO.save(newMember);
+			newMember.name = Application.application.memberForm.memberNameInput.text;
+			newMember.surname = Application.application.memberForm.memberSurnameInput.text;
+			newMember.fatherName = Application.application.memberForm.memberFatherNameInput.text;
+			Application.application.membersRO.save(newMember);
 		}
 	}
 }
