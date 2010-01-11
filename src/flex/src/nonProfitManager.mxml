@@ -2,7 +2,6 @@
 <mx:Application name="app" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:custom="components.*" layout="absolute">
 	<mx:Script>
 		<![CDATA[
-			import views.Members;
 			import models.*;
 			
 			import mx.containers.HBox;
@@ -18,8 +17,7 @@
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
-			
-			import views.Members;
+			import components.MemberForm;
 			
 			public var window:TitleWindow;
 			public var nameInput:TextInput = new TextInput();
@@ -27,6 +25,7 @@
 			public var fatherNameInput:TextInput = new TextInput();
 			public var birthDateInput:DateChooser = new DateChooser();
 			
+			[Bindable]
 			public var memberFormInstance:MemberForm;
 			
 			[Bindable] 
@@ -173,7 +172,6 @@
 						<mx:icon>@Embed(source='..//icons/user_delete.png')</mx:icon>
 					</mx:Button>
 				</mx:ControlBar>
-				<custom:MemberForm />
 			</mx:Panel>
 		</mx:VBox>
 	</mx:HBox>

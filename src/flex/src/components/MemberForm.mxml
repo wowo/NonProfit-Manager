@@ -6,11 +6,11 @@
 		]]>
 	</mx:Script>
 	<mx:Form>
-		<mx:FormItem label="Imię" id="nameInput" name="foo">
-			<mx:TextInput />
+		<mx:FormItem label="Imię">
+			<mx:TextInput id="nameInput" />
 		</mx:FormItem>
-		<mx:FormItem label="Nazwisko" id="surnameInput">
-			<mx:TextInput />
+		<mx:FormItem label="Nazwisko">
+			<mx:TextInput id="surnameInput"/>
 		</mx:FormItem>
 		<mx:FormItem label="Imię ojca">
 			<mx:TextInput id="fatherNameInput"/>
