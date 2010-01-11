@@ -25,7 +25,7 @@ class Member(models.Model):
   workplace = models.CharField("Miejsce pracy", max_length=200, blank=True, null=True)
   accessionDate = models.DateField("Data wstąpienia", max_length=200)
   dismissDate = models.DateField("Data rezygnacji", max_length=200, default=None, null=True, blank=True)
-  functions = models.CharField("Funkcje", max_length=200, blank=True, null=True)
+  functions = models.CharField("Funkcje", max_length=200, blank=True, null=True) #wywalic to stad
   address = models.TextField("Adres", blank=True, null=True)
   identityCardNumber = models.CharField("Numer legitymacji", max_length=200, unique=True, blank=True, null=True)
   pesel = models.CharField("Pesel", max_length=15, unique=True)
