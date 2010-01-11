@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:Script>
+		<![CDATA[
+			import views.Members;
+		]]>
+	</mx:Script>
+	<mx:Form>
+		<mx:FormItem label="Imię" id="memberNameInput" name="foo">
+			<mx:TextInput />
+		</mx:FormItem>
+		<mx:FormItem label="Nazwisko" id="memberSurnameInput">
+			<mx:TextInput />
+		</mx:FormItem>
+		<mx:FormItem label="Imię ojca">
+			<mx:TextInput id="memberFatherNameInput"/>
+		</mx:FormItem>
+		<mx:FormItem>
+			<mx:Button click="views.Members.saveMember(event)" label="Zapisz"/>
+		</mx:FormItem>
+	</mx:Form>
+</mx:Canvas>
