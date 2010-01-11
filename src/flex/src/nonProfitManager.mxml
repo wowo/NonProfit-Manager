@@ -2,6 +2,7 @@
 <mx:Application name="app" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:custom="components.*" layout="absolute">
 	<mx:Script>
 		<![CDATA[
+			import views.Members;
 			import models.*;
 			
 			import mx.containers.HBox;
@@ -18,11 +19,15 @@
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
 			
+			import views.Members;
+			
 			public var window:TitleWindow;
 			public var nameInput:TextInput = new TextInput();
 			public var surnameInput:TextInput = new TextInput();
 			public var fatherNameInput:TextInput = new TextInput();
 			public var birthDateInput:DateChooser = new DateChooser();
+			
+			public var memberFormInstance:MemberForm;
 			
 			[Bindable] 
 			public var rowsCount:Number = 0;
@@ -83,7 +88,8 @@
 				window.showCloseButton = true;
 				window.addEventListener(CloseEvent.CLOSE, removeMe);
 				
-				window.addChild(new MemberForm());
+				memberFormInstance = new MemberForm();
+				window.addChild(memberFormInstance);
 				
 				
 				TitleWindow(PopUpManager.addPopUp(window, this,true));

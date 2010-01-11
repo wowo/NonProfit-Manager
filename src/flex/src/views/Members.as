@@ -1,7 +1,7 @@
 package views
 {
-	import components.MemberForm;
 	import flash.events.MouseEvent;
+	
 	import models.Member;
 
 	public class Members
@@ -14,9 +14,9 @@ package views
 		{
 			var newMember:Member = new Member();
 			newMember.id = 0;
-			newMember.name = memberNameInput.text;
-			newMember.surname = memberSurnameInput.text;
-			newMember.fatherName = memberFatherNameInput.text;
+			newMember.name = memberFormInstance.nameInput.text;
+			newMember.surname = memberFormInstance.surnameInput.text;
+			newMember.fatherName = memberFormInstance.fatherNameInput.text;
 			membersRO.save(newMember);
 		}
 	}
