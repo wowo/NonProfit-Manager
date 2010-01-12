@@ -24,6 +24,7 @@
 			public var surnameInput:TextInput = new TextInput();
 			public var fatherNameInput:TextInput = new TextInput();
 			public var birthDateInput:DateChooser = new DateChooser();
+			public var memberForm:MemberForm;
 			
 			[Bindable]
 			public var memberFormInstance:MemberForm;
@@ -87,8 +88,8 @@
 				window.showCloseButton = true;
 				window.addEventListener(CloseEvent.CLOSE, removeMe);
 				
-				memberFormInstance = new MemberForm();
-				window.addChild(memberFormInstance);
+				memberForm = new MemberForm();
+				window.addChild(memberForm);
 				
 				
 				TitleWindow(PopUpManager.addPopUp(window, this,true));

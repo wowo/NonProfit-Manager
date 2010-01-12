@@ -1,9 +1,7 @@
 package views
 {
-	import components.MemberForm;
-	
-	import flash.events.MouseEvent;
-	
+	import mx.core.Application;
+	import flash.events.MouseEvent;	
 	import models.Member;
 	
 	import mx.core.Application;
@@ -18,10 +16,9 @@ package views
 		{
 			var newMember:Member = new Member();
 			newMember.id = 0;
-			
-			newMember.name = Application.application.memberFormInstance.nameInput.text;
-			newMember.surname = Application.application.memberFormInstance.surnameInput.text;
-			newMember.fatherName = Application.application.memberFormInstance.fatherNameInput.text;
+			newMember.name = Application.application.memberForm.memberNameInput.text;
+			newMember.surname = Application.application.memberForm.memberSurnameInput.text;
+			newMember.fatherName = Application.application.memberForm.memberFatherNameInput.text;
 			Application.application.membersRO.save(newMember);
 		}
 	}
