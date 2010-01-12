@@ -16,9 +16,9 @@ package views
 		{
 			var newMember:Member = new Member();
 			newMember.id = 0;
-			newMember.name = Application.application.memberForm.memberNameInput.text;
-			newMember.surname = Application.application.memberForm.memberSurnameInput.text;
-			newMember.fatherName = Application.application.memberForm.memberFatherNameInput.text;
+			newMember.name = Application.application.memberForm.nameInput.text;
+			newMember.surname = Application.application.memberForm.surnameInput.text;
+			newMember.fatherName = Application.application.memberForm.fatherNameInput.text;
 			Application.application.membersRO.save(newMember);
 		}
 	}
