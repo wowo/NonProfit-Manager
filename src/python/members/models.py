@@ -49,6 +49,10 @@ class Member(models.Model):
     return date.today().year - self.birthDate.year
   age.short_description = 'Wiek'
 
+  def yearsOfService(self):
+    return date.today().year - self.accessionDate.year
+  yearsOfService.short_description = 'Lata służby'
+
 def getAllItems(self):
   rows = Member.objects.order_by('surname')
   return rows

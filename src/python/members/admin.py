@@ -21,7 +21,7 @@ class MemberAdmin(admin.ModelAdmin):
        }),
     )
     list_display =['id', 'name', 'surname', 'fatherName', 'age', 'birthDate', 'pesel', 'identityCardNumber', 
-        'phone', 'email', 'ggNumber', 'address', 'accessionDate', 'dismissDate', 'createdAt',]
+        'phone', 'email', 'ggNumber', 'address', 'accessionDate', 'yearsOfService', 'dismissDate', 'createdAt',]
     list_display_links = ['id', 'surname']
     list_filter = ['birthDate', 'accessionDate',]
 
