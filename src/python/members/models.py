@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 import logging
+from datetime import date
 
 class Section(models.Model):
   def __unicode__(self):
@@ -9,6 +10,12 @@ class Section(models.Model):
   description = models.TextField("Opis")
 
 class Member(models.Model):
+  class Meta:
+    ordering = ['surname', 'fatherName', 'birthDate']
+    get_latest_by = 'createdAt'
+    verbose_name = 'Członek'
+    verbose_name_plural = 'Członkowie'
+    
   def __unicode__(self):
     return '%s %s' % (self.name, self.surname)
   membershipTypeEnum = (
@@ -37,6 +44,10 @@ class Member(models.Model):
 #  sections = models.ManyToManyField(Section)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
+
+  def age(self):
+    return date.today().year - self.birthDate.year
+  age.short_description = 'Wiek'
 
 def getAllItems(self):
   rows = Member.objects.order_by('surname')
