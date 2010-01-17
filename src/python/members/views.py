@@ -13,21 +13,18 @@ import locale
 
 
 def index(request, reportName):
-  members = Member.objects.all()
   locale.setlocale(locale.LC_ALL, '') 
-  data = {
-    'MEDIA_ROOT': MEDIA_ROOT,
-    'report':  Report(
-      Page(orientation='landscape', withCounterColumn=False), 
-      Info(), 
-      members, 
-      ('id', 'surname', 'name', 'fatherName', 'age')
-    )
-  }
+  report = Report(
+    Page(orientation='landscape', withCounterColumn=False), 
+    Info(), 
+    Member.objects.all(), 
+    ('id', 'surname', 'name', 'fatherName', 'age')
+  )
+  data = {'MEDIA_ROOT': MEDIA_ROOT, 'report': report}
   if request.REQUEST.get('method', 'pdf') == 'html':
-      return render_to_response('memberList.html', data)
+      return render_to_response(report.page.template, data)
   else:
-      return write_pdf('memberList.html', data)
+      return write_pdf(report.page.template, data)
 
 
 def write_pdf(template_src, context_dict):

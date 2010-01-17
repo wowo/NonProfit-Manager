@@ -6,9 +6,9 @@ from django.db.models.fields import FieldDoesNotExist
   It aggregates page and info objects
 """
 class Report:
-  page = None
-  info = None
   data = None
+  info = None
+  page = None
   """
     Constructor
   """
@@ -22,14 +22,15 @@ class Report:
   Report page informations (orientation, margins, size)
 """
 class Page:
-  orientation = 'portrait'
   margin = '1cm'
+  orientation = 'portrait'
   size = 'a4'
+  template = 'reportList.html'
   withCounterColumn = True
   """
     Constructor
   """
-  def __init__(self, orientation=None, margin=None, size=None, withCounterColumn=True):
+  def __init__(self, orientation=None, margin=None, size=None, withCounterColumn=True, template=None):
     self.withCounterColumn = withCounterColumn
     if orientation:
       self.orientation = orientation
@@ -37,16 +38,18 @@ class Page:
       self.margin = margin
     if size:
       self.size = size
+    if template:
+      self.template = template
 
 
 """
   Informations about report (creator, date, signature etc)
 """
 class Info:
-  creator = 'Wojciech Sznapka'
-  institution = 'OSP Woszczyce'
   createdAt = None
+  creator = 'Wojciech Sznapka'
   dateFormat = '%d %B %Y, %H:%M'
+  institution = 'OSP Woszczyce'
   signature = 'Wygenerowano przy pomocy programu Non Profit Manager'
   """
     Constructor
