@@ -15,19 +15,22 @@ import locale
 def index(request, reportName):
   members = Member.objects.all()
   locale.setlocale(locale.LC_ALL, '') 
-  return write_pdf('memberList.html',{
-      'pagesize' : 'A4',
-      'objects': members,
-      'MEDIA_ROOT':MEDIA_ROOT,})
+  data = {
+    'pagesize' : 'A4',
+    'objects': members,
+    'MEDIA_ROOT': MEDIA_ROOT,
+    'report':  Report(Page(orientation='landscape'), Info())
+  }
+  if request.REQUEST.get('method', 'pdf') == 'html':
+      return render_to_response('memberList.html', data)
+  else:
+      return write_pdf('memberList.html', data)
 
 
 def write_pdf(template_src, context_dict):
-    context_dict['report'] = Report(Page(orientation='landscape'), Info())
-    #return render_to_response('memberList.html', Context(context_dict))
-
-    html = get_template(template_src).render(Context(context_dict))
+    html   = get_template(template_src).render(Context(context_dict))
     result = StringIO.StringIO()
-    pdf  = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)
+    pdf    = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)
     if not pdf.err:
       return http.HttpResponse(result.getvalue(), mimetype='application/pdf')
     else:

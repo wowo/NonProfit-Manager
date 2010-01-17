@@ -9,13 +9,27 @@
          src: url({{ MEDIA_ROOT}}/font/DejaVuSerif.ttf);
       }
       @page {
-         size: {{ report.page.size }} {{ report.page.orientation }};
          margin: 1cm;
+         size: {{ report.page.size }} {{ report.page.orientation }};
+         top: 1cm;
+        @frame footer {
+          -pdf-frame-content: footer;
+          bottom: 1cm;
+          height: 1cm;
+          margin: 0 1cm;
+        }
+        @frame header {
+          -pdf-frame-content: header;
+          height: 0.2cm;
+          margin: 0 1cm;
+          top: 1cm;
+        }
       }
       html, body, table, caption, tbody, tfoot, thead, tr, th, td, div, p {
         font-family: DejaVuSerif;
       }
     </style>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_ROOT}}/style/report.css" /> 
   </head>
   <body>
     <div id="report">
@@ -31,6 +45,7 @@
         {% block footer %}
           <p id="pager">Strona: <pdf:pagenumber></p>
           <p id="info"><span id="creator">Wygenerował: {{ report.info.creator }},</span><span id="createdAt"> data: {{ report.info.createdAt }}</span></p>
+          <p id=signature">{{ report.info.signature }}</p>
         {% endblock %}
       </div>
     </div>
