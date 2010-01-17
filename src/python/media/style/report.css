@@ -28,6 +28,14 @@ th {
   width: 20px;
 }
 
+thead tr {
+  border-bottom: 2px solid #000;
+}
+
+tfoot tr {
+  border-top: 2px solid #000;
+}
+
 #footer,
 #footer p {
   padding: 0;

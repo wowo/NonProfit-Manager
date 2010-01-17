@@ -20,6 +20,7 @@
          margin: {{ report.page.margin }};
          size: {{ report.page.size }} {{ report.page.orientation }};
          top: 1cm;
+         bottom: 1.3cm;
         @frame footer {
           -pdf-frame-content: footer;
           {# -pdf-frame-border: 1; #}
@@ -49,7 +50,9 @@
       </div>
       <div id="footer">
         {% block footer %}
-          <p id="pager">Strona: <span><pdf:pagenumber example="0"></span></p>
+          <p id="pager">Strona: 
+            <span><pdf:pagenumber /></span>
+          </p>
           <p id="info">
             <span class="label creator">Wygenerował: <span>{{ report.info.creator }}</span></span>, 
             <span class="label createdAt">data: <span>{{ report.info.createdAt }}</span></span>

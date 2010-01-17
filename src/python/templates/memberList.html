@@ -7,25 +7,31 @@
   <table repeat="1">
     <thead>
       <tr>
-        <th class="lpRow">LP</th>
-        <th>Imię</th>
-        <th>Nazwisko</th>
+        {% if report.page.withCounterColumn %}
+          <th class="lpRow">LP</th>
+        {% endif %}
+        {% for label in report.data.labels %}
+          <th>{{ label }}</th>
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
-      {% if objects %}
-        {% for object in objects %}
+      {% if report.data.rows %}
+        {% for row in report.data.rows %}
           <tr>
-            <td class="lpRow">{{ forloop.counter }}</td>
-            <td>{{ object.name }}</td>
-            <td>{{ object.surname }}</td>
+            {% if report.page.withCounterColumn %}
+              <td class="lpRow">{{ forloop.counter }}</td>
+            {% endif %}
+            {% for cell in row %}
+              <td>{{ cell }}</td>
+            {% endfor %}
           </tr>
         {% endfor %}
       {% endif %}
     </tbody>
     <tfoot>
       <tr>
-        <th colspan="3">Wierszy: {{ objects|length }}</th>
+        <th colspan="{{ report.data.columnsCount }}">Wierszy: {{ report.data.rows|length }}</th>
       </tr>
     </tfoot>
   </table>

@@ -16,10 +16,13 @@ def index(request, reportName):
   members = Member.objects.all()
   locale.setlocale(locale.LC_ALL, '') 
   data = {
-    'pagesize' : 'A4',
-    'objects': members,
     'MEDIA_ROOT': MEDIA_ROOT,
-    'report':  Report(Page(orientation='portrait'), Info())
+    'report':  Report(
+      Page(orientation='landscape', withCounterColumn=False), 
+      Info(), 
+      members, 
+      ('id', 'surname', 'name', 'fatherName', 'age')
+    )
   }
   if request.REQUEST.get('method', 'pdf') == 'html':
       return render_to_response('memberList.html', data)
