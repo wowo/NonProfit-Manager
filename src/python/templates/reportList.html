@@ -22,8 +22,8 @@
             {% if report.page.withCounterColumn %}
               <td class="lpRow">{{ forloop.counter }}</td>
             {% endif %}
-            {% for cell in row %}
-              <td>{{ cell }}</td>
+            {% for columnName, value in row %}
+              <td class="{{ columnName }}">{{ value }}</td>
             {% endfor %}
           </tr>
         {% endfor %}

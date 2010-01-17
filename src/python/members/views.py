@@ -14,11 +14,12 @@ import locale
 
 def index(request, reportName):
   locale.setlocale(locale.LC_ALL, '') 
+
   report = Report(
     Page(orientation='landscape', withCounterColumn=False), 
     Info(), 
     Member.objects.all(), 
-    ('id', 'surname', 'name', 'fatherName', 'age')
+    request.REQUEST.getlist('col[]')
   )
   data = {'MEDIA_ROOT': MEDIA_ROOT, 'report': report}
   if request.REQUEST.get('method', 'pdf') == 'html':

@@ -42,8 +42,8 @@ class Member(models.Model):
   membershipType= models.CharField("typ członkowstwa", max_length=1, choices=membershipTypeEnum, default='C')
   comments = models.TextField("uwagi", blank=True, null=True)
 #  sections = models.ManyToManyField(Section)
-  createdAt = models.DateTimeField(auto_now_add=True)
-  updatedAt = models.DateTimeField(auto_now=True)
+  createdAt = models.DateTimeField("utworzono", auto_now_add=True)
+  updatedAt = models.DateTimeField("zmodyfikowano", auto_now=True)
 
   def _getAge(self):
     if self.birthDate:

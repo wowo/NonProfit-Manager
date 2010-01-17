@@ -71,8 +71,7 @@ class Info:
   Provides data (table rows) for report. It convert it from model objects.
 """
 class DataProvider:
-  __objects = None
-  __columns = []
+  columns = []
   labels  = []
   rows    = []
   columnsCount = 0
@@ -80,6 +79,7 @@ class DataProvider:
     Constructor
   """
   def __init__(self, objects, columns, withCounterColumn):
+    self.columns = columns
     self.labels = self.getLabelsFromModel(columns, objects[0])
     self.rows   = self.convert(objects, columns)
     self.columnsCount = len(columns) + (1 if withCounterColumn else 0)
@@ -90,7 +90,9 @@ class DataProvider:
     for object in objects:
       tmp = []
       for column in columns:
-        tmp.append(getattr(object, column))
+        value = getattr(object, column)
+        value = value if value else ''
+        tmp.append((column, value))
       result.append(tmp)
     return result
 
