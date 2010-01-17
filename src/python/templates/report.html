@@ -8,25 +8,31 @@
          font-family: DejaVuSerif;
          src: url({{ MEDIA_ROOT}}/font/DejaVuSerif.ttf);
       }
+      @font-face {
+         font-family: DejaVuSerif-Italic;
+         src: url({{ MEDIA_ROOT}}/font/DejaVuSerif-Italic.ttf);
+      }
+      @font-face {
+         font-family: DejaVuSerif-Bold;
+         src: url({{ MEDIA_ROOT}}/font/DejaVuSerif-Bold.ttf);
+      }
       @page {
-         margin: 1cm;
+         margin: {{ report.page.margin }};
          size: {{ report.page.size }} {{ report.page.orientation }};
          top: 1cm;
         @frame footer {
           -pdf-frame-content: footer;
-          bottom: 1cm;
-          height: 1cm;
-          margin: 0 1cm;
+          {# -pdf-frame-border: 1; #}
+          bottom: {{ report.page.margin }};
+          height: 1.3cm;
+          margin: 0 {{ report.page.margin }};
         }
         @frame header {
           -pdf-frame-content: header;
           height: 0.2cm;
-          margin: 0 1cm;
-          top: 1cm;
+          margin: 0 {{ report.page.margin }};
+          top: {{ report.page.margin }};
         }
-      }
-      html, body, table, caption, tbody, tfoot, thead, tr, th, td, div, p {
-        font-family: DejaVuSerif;
       }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_ROOT}}/style/report.css" /> 
@@ -43,9 +49,12 @@
       </div>
       <div id="footer">
         {% block footer %}
-          <p id="pager">Strona: <pdf:pagenumber></p>
-          <p id="info"><span id="creator">Wygenerował: {{ report.info.creator }},</span><span id="createdAt"> data: {{ report.info.createdAt }}</span></p>
-          <p id=signature">{{ report.info.signature }}</p>
+          <p id="pager">Strona: <span><pdf:pagenumber example="0"></span></p>
+          <p id="info">
+            <span class="label creator">Wygenerował: <span>{{ report.info.creator }}</span></span>, 
+            <span class="label createdAt">data: <span>{{ report.info.createdAt }}</span></span>
+          </p>
+          <p id="signature">{{ report.info.signature }}</p>
         {% endblock %}
       </div>
     </div>

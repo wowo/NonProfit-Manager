@@ -39,17 +39,18 @@ class Page:
 """
 class Info:
   creator = 'Wojciech Sznapka'
+  institution = 'OSP Woszczyce'
   createdAt = None
   dateFormat = '%d %B %Y, %H:%M'
-  signature = "Wygenerowano przy pomocy programu Non Profit Manager"
+  signature = 'Wygenerowano przy pomocy programu Non Profit Manager'
   """
     Constructor
   """
-  def __init__(self, creator=None, createdAt=None, dateFormat=None):
+  def __init__(self, creator=None, createdAt=None, dateFormat=None, institution=None):
     if creator:
-      print "creator %s" % creator
-
       self.creator = creator
+    if institution:
+      self.institution = institution
     if dateFormat:
       self.dateFormat = dateFormat
     if createdAt:

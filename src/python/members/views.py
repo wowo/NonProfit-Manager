@@ -19,7 +19,7 @@ def index(request, reportName):
     'pagesize' : 'A4',
     'objects': members,
     'MEDIA_ROOT': MEDIA_ROOT,
-    'report':  Report(Page(orientation='landscape'), Info())
+    'report':  Report(Page(orientation='portrait'), Info())
   }
   if request.REQUEST.get('method', 'pdf') == 'html':
       return render_to_response('memberList.html', data)
