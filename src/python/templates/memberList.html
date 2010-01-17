@@ -1,0 +1,30 @@
+{% extends 'report.html' %}
+{% block header%}
+  <h1>Lista członków</h1>
+{% endblock %}
+
+{% block body %}
+  <table>
+    <thead>
+      <tr>
+        <td>Imię</td>
+        <td>Nazwisko</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% if objects %}
+        {% for object in objects %}
+          <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.surname }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Obiektów: {{ objects|length }}</td>
+      </tr>
+    </tfoot>
+  </table>
+{% endblock %}

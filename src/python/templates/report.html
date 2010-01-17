@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css"> 
+      @font-face {
+         font-family: DejaVuSerif;
+         src: url({{ MEDIA_ROOT}}/font/DejaVuSerif.ttf);
+      }
+      @page {
+         size: {{ report.page.size }} {{ report.page.orientation }};
+         margin: 1cm;
+      }
+      html, body, table, caption, tbody, tfoot, thead, tr, th, td, div, p {
+        font-family: DejaVuSerif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="report">
+      <div id="header">
+        {% block header %}
+        {% endblock %}
+      </div>
+      <div id="body">
+        {% block body %}
+        {% endblock %}
+      </div>
+      <div id="footer">
+        {% block footer %}
+          <p id="pager">Strona: <pdf:pagenumber></p>
+          <p id="info"><span id="creator">Wygenerował: {{ report.info.creator }},</span><span id="createdAt"> data: {{ report.info.createdAt }}</span></p>
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

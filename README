@@ -5,6 +5,10 @@
  * pyamf python package (sudo easy_install pyamf)
  * sqllite driver for python (sudo apt-get install python-sqllite)
  * pyyaml library (sudo easy_install pyyaml)
+ * pisa library - xhtml2pdf (sudo easy_install pisa)
+  * html5lib (sudo easy_install html5lib)
+  * Report Lab Toolkit (sudo easy_install Reportlab)
+  * pyPdf (sudo easy_install pyPdf)
 
 === Running nonProfit Manager ===
  * enter src/python directory
