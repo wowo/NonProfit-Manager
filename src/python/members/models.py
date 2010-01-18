@@ -56,13 +56,13 @@ class Member(models.Model):
     return date.today().year - self.accessionDate.year
   yearsOfService.short_description = 'Lata służby'
 
-def getAllItems(self):
-  rows = Member.objects.order_by('surname')
-  return rows
+  def getAllItems(self, request):
+    rows = Member.objects.order_by('surname')
+    return rows
 
-def save(self, member):
-  member.save()
-  return member
+  def saveFromFlex(self, request, member):
+    member.save()
+    return member
 
-def remove(self, member):
-  member.delete()
+  def remove(self, request, member):
+    member.delete()

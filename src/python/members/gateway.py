@@ -12,7 +12,7 @@ logging.basicConfig(
 pyamf.register_class(models.Member, 'models.Member')
 
 services = {
-  'Members': models
+  'Members': models.Member
 }
 
 echoGateway = DjangoGateway(services, logger=logging)

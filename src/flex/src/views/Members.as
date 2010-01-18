@@ -90,7 +90,7 @@ package views
 			}
 			Application.application.window.addChild(form);
 			
-			PopUpManager.addPopUp(Application.application.window, Application.application.hbox,true);
+			PopUpManager.addPopUp(Application.application.window, Application.application.canvas,true);
 			PopUpManager.centerPopUp(Application.application.window);		
 		}
 		

@@ -109,7 +109,7 @@
 				if (newValue != oldValue) {
 					var memberToSave:Member = grid.selectedItem as Member;
 					memberToSave[event.dataField] = newValue;
-					membersRO.save(memberToSave);
+					membersRO.saveFromFlex(memberToSave);
 				}
 			}
 
@@ -117,29 +117,14 @@
 	</mx:Script>
 	<mx:RemoteObject  id="membersRO" endpoint="http://127.0.0.1:8000/gateway/" destination="Members">
 		<mx:method name="getAllItems" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
-		<mx:method name="save" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
+		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 	</mx:RemoteObject>
-	<mx:HBox id="hbox" left="10" right="10" bottom="10" top="10">
-		<mx:Accordion width="150" height="100%">
-			<mx:Canvas label="Członkowie" width="100%" height="100%">
-				<mx:Button y="10" label="Lista członków" labelPlacement="right" right="10" left="10" cornerRadius="0">
-					<mx:icon>@Embed(source='..//icons/application_view_list.png')</mx:icon>
-				</mx:Button>
-			</mx:Canvas>
-			<mx:Canvas label="Sekcje" width="100%" height="100%">
-			</mx:Canvas>
-			<mx:Canvas label="Władze" width="100%" height="100%">
-			</mx:Canvas>
-			<mx:Canvas label="Odznaczenia" width="100%" height="100%">
-			</mx:Canvas>
-			<mx:Canvas label="Szkolenia" width="100%" height="100%">
-			</mx:Canvas>
-			<mx:Canvas label="Spotkania" width="100%" height="100%">
-			</mx:Canvas>
-		</mx:Accordion>
-		<mx:VBox width="100%" height="100%">
-			<mx:Panel title="Rejestr członków"  width="100%" height="100%">
+	
+
+	<mx:Canvas id="canvas" width="100%" height="100%" top="5" left="5" right="5" bottom="5">
+		<mx:TabNavigator width="100%" height="100%">
+			<mx:VBox label="Rejestr członków" icon="@Embed(source='..//icons/system-users.png')" height="100%" width="100%">
 				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" editable="true"
 					initialize="application1_initializeHandler(event)" change="selectHandler(event)"
 					itemEditEnd="grid_itemEditEndHandler(event)">
@@ -179,7 +164,10 @@
 						<mx:icon>@Embed(source='..//icons/application_view_columns.png')</mx:icon>
 					</mx:Button>
 				</mx:ControlBar>
-			</mx:Panel>
-		</mx:VBox>
-	</mx:HBox>
+			</mx:VBox>
+			<mx:VBox label="Odznaczenia"  icon="@Embed(source='..//icons/application-certificate.png')" height="100%" width="100%">
+				<mx:Button label="Dodaj" />
+			</mx:VBox>
+		</mx:TabNavigator>
+	</mx:Canvas>
 </mx:Application>
