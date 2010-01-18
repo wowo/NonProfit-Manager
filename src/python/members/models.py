@@ -82,6 +82,6 @@ class Award(models.Model):
     return self.name
 
   name = models.CharField("nazwa", max_length=255)
-  comments = models.TextField("opis", blank=True, null=True)
+  description = models.TextField("opis", blank=True, null=True)
   createdAt = models.DateTimeField("utworzono", auto_now_add=True)
   updatedAt = models.DateTimeField("zmodyfikowano", auto_now=True)
