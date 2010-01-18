@@ -145,3 +145,49 @@
     ggNumber: 1379465
     membershipType: C
     comments: 
+
+- model: members.award
+  pk: 1
+  fields:
+    name: 'Złoty Znak Związku OSP'
+    description: 'Złoty Znak Związku OSP zawiesza się na szyi, podkładając pod kołnierz koszuli, tak aby górne ramię krzyża sięgało węzła krawatu.'
+  pk: 2
+  fields:
+    name: 'Złoty medal "Za Zasługi dla Pożarnictwa"'
+    description: 'Złoty medal "Za Zasługi dla Pożarnictwa" nosi się na lewej piersi, na wstążkach, 6,5 cm nad lewą górną kieszenią munduru.'
+  pk: 3
+  fields:
+    name: 'Srebrny medal "Za Zasługi dla Pożarnictwa"'
+    description: 'Srebrny medal "Za Zasługi dla Pożarnictwa" nosi się na lewej piersi, na wstążkach, 6,5 cm nad lewą górną kieszenią munduru.'
+  pk: 4
+  fields:
+    name: 'Brązowy medal "Za Zasługi dla Pożarnictwa"'
+    description: 'Brązowy medal "Za Zasługi dla Pożarnictwa" nosi się na lewej piersi, na wstążkach, 6,5 cm nad lewą górną kieszenią munduru.'
+  pk: 5
+  fields:
+    name: 'Odznaka "Strażak Wzorowy"'
+    description: 'Odznakę Strażaka Wzorowego nosi się po środku lewej górnej kieszeni munduru.'
+  pk: 6
+  fields:
+    name: 'Odznaka "Za Zasługi we Współzawodnictwie Przeciwpożarowym"'
+    description: 'Odznakę Za Zasługi we Współzawodnictwie Przeciwpożarowym nosi się na prawej piersi, 4,5cm nad prawą górną kieszenią munduru.'
+  pk: 7
+  fields:
+    name: 'Odznaka "Za Wysługę Lat"'
+    description: 'Odznakę "Za Wysługę Lat" nosi się jedną aktualną.'
+  pk: 8
+  fields:
+    name: 'Medal Honorowy im. B. Chomicza'
+    description: 
+  pk: 9
+  fields:
+    name: 'Złota Odznaka Młodzieżowej Drużyny Pożarniczej'
+    description: 
+  pk: 10
+  fields:
+    name: 'Srebrna Odznaka Młodzieżowej Drużyny Pożarniczej'
+    description: 
+  pk: 11
+  fields:
+    name: 'Brązowa Odznaka Młodzieżowej Drużyny Pożarniczej'
+    description: 

@@ -9,6 +9,7 @@ class Section(models.Model):
   name = models.CharField("Nazwa", max_length=200)
   description = models.TextField("Opis")
 
+
 class Member(models.Model):
   class Meta:
     ordering = ['surname', 'fatherName', 'birthDate']
@@ -18,11 +19,13 @@ class Member(models.Model):
     
   def __unicode__(self):
     return '%s %s' % (self.name, self.surname)
+
   membershipTypeEnum = (
     ('C', u'Czynny'),
     ('W', u'Wspierający'),
     ('H', u'Honorowy'),
   )
+
   name = models.CharField("imię", max_length=200)
   surname = models.CharField("nazwisko", max_length=200)
   fatherName = models.CharField("imię ojca", max_length=200, blank=True, null=True)
@@ -66,3 +69,19 @@ class Member(models.Model):
 
   def remove(self, request, member):
     member.delete()
+
+
+class Award(models.Model):
+  class Meta:
+    ordering = ['name']
+    get_latest_by = 'createdAt'
+    verbose_name = 'Odznaczenie'
+    verbose_name_plural = 'Odznaczenia'
+    
+  def __unicode__(self):
+    return self.name
+
+  name = models.CharField("nazwa", max_length=255)
+  comments = models.TextField("opis", blank=True, null=True)
+  createdAt = models.DateTimeField("utworzono", auto_now_add=True)
+  updatedAt = models.DateTimeField("zmodyfikowano", auto_now=True)
