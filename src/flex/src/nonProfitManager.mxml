@@ -2,10 +2,10 @@
 <mx:Application name="app" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:custom="components.*" layout="absolute">
 	<mx:Script>
 		<![CDATA[
+			import components.*;
+			
 			import models.*;
 			
-			import mx.containers.HBox;
-			import mx.containers.Panel;
 			import mx.containers.TitleWindow;
 			import mx.containers.VBox;
 			import mx.controls.Button;
@@ -19,7 +19,6 @@
 			import mx.rpc.events.ResultEvent;
 			
 			import views.*;
-			import components.*;
 			
 			public var window:TitleWindow;
 			public var nameInput:TextInput = new TextInput();
@@ -120,6 +119,9 @@
 		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 	</mx:RemoteObject>
+	<mx:RemoteObject  id="awardsRO" endpoint="http://127.0.0.1:8000/gateway/" destination="Awards">
+		<mx:method name="getAllItems" result="Award.getAllItemsResultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
+	</mx:RemoteObject>
 	
 
 	<mx:Canvas id="canvas" width="100%" height="100%" top="5" left="5" right="5" bottom="5">
@@ -166,7 +168,17 @@
 				</mx:ControlBar>
 			</mx:VBox>
 			<mx:VBox label="Odznaczenia"  icon="@Embed(source='..//icons/application-certificate.png')" height="100%" width="100%">
-				<mx:Button label="Dodaj" />
+				<mx:DataGrid id="awardGrid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" editable="true"
+							 initialize="Award.gridInitialize(event)" change="selectHandler(event)"
+							 itemEditEnd="grid_itemEditEndHandler(event)">
+					<mx:columns>
+						<mx:DataGridColumn dataField="id" headerText="ID" width="30"  editable="false"/>
+						<mx:DataGridColumn dataField="name" headerText="Nazwa" />
+						<mx:DataGridColumn dataField="description" headerText="Opis"/>
+						<mx:DataGridColumn dataField="createdAt" headerText="Utworzono" editable="false"/>
+						<mx:DataGridColumn dataField="modifiedAt" headerText="Zmieniono" editable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
 			</mx:VBox>
 		</mx:TabNavigator>
 	</mx:Canvas>

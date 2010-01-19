@@ -85,3 +85,7 @@ class Award(models.Model):
   description = models.TextField("opis", blank=True, null=True)
   createdAt = models.DateTimeField("utworzono", auto_now_add=True)
   updatedAt = models.DateTimeField("zmodyfikowano", auto_now=True)
+
+  def getAllItems(self, request):
+    rows = Award.objects.order_by('name')
+    return rows

@@ -10,9 +10,11 @@ logging.basicConfig(
 )
 
 pyamf.register_class(models.Member, 'models.Member')
+pyamf.register_class(models.Award, 'models.Award')
 
 services = {
-  'Members': models.Member
+  'Members': models.Member,
+  'Awards': models.Award,
 }
 
 echoGateway = DjangoGateway(services, logger=logging)
