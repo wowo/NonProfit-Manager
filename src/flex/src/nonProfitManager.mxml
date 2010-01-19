@@ -118,14 +118,19 @@
 			{
 				var remoteObjects:Array = new Array(membersRO, awardsRO);
 				for (var i:int; i < remoteObjects.length; i++) {
-					remoteObjects[i].endpoint = 'http://';
-					if (this.url.indexOf("file://") == 0) {
-						remoteObjects[i].endpoint += '127.0.0.1:8000';
-					} else {
-						remoteObjects[i].endpoint += URLUtil.getServerNameWithPort(this.url);
-					}
-					remoteObjects[i].endpoint +=  '/gateway/';
+					remoteObjects[i].endpoint = this.getEndpointUrl() +  '/gateway/';
 				}
+			}
+			
+			protected function getEndpointUrl():String
+			{
+				var endpoint:String = 'http://';
+				if (this.url.indexOf("file://") == 0) {
+					endpoint += '127.0.0.1:8000';
+				} else {
+					endpoint += URLUtil.getServerNameWithPort(this.url);
+				}
+				return endpoint;
 			}
 
 		]]>
