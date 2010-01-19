@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application name="app" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:custom="components.*" layout="absolute">
+<mx:Application name="app" xmlns:mx="http://www.adobe.com/2006/mxml" 
+				xmlns:custom="components.*" layout="absolute" initialize="application2_initializeHandler(event)">
 	<mx:Script>
 		<![CDATA[
 			import components.*;
@@ -17,6 +18,7 @@
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
+			import mx.utils.URLUtil;
 			
 			import views.*;
 			
@@ -112,14 +114,28 @@
 				}
 			}
 
+			protected function application2_initializeHandler(event:FlexEvent):void
+			{
+				var remoteObjects:Array = new Array(membersRO, awardsRO);
+				for (var i:int; i < remoteObjects.length; i++) {
+					remoteObjects[i].endpoint = 'http://';
+					if (this.url.indexOf("file://") == 0) {
+						remoteObjects[i].endpoint += '127.0.0.1:8000';
+					} else {
+						remoteObjects[i].endpoint += URLUtil.getServerNameWithPort(this.url);
+					}
+					remoteObjects[i].endpoint +=  '/gateway/';
+				}
+			}
+
 		]]>
 	</mx:Script>
-	<mx:RemoteObject  id="membersRO" endpoint="http://127.0.0.1:8000/gateway/" destination="Members">
+	<mx:RemoteObject  id="membersRO" endpoint="" destination="Members">
 		<mx:method name="getAllItems" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
 		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject  id="awardsRO" endpoint="http://127.0.0.1:8000/gateway/" destination="Awards">
+	<mx:RemoteObject  id="awardsRO" endpoint="" destination="Awards">
 		<mx:method name="getAllItems" result="Award.getAllItemsResultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
 	</mx:RemoteObject>
 	
