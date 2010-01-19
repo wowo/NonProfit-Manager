@@ -68,6 +68,7 @@
 				mx.controls.Alert.show("Czy napewno usunąć następujących członków?" + members, "Osrzeżenie", 
 					mx.controls.Alert.OK|mx.controls.Alert.CANCEL,this, memberDelete)
 			}
+			
 			protected function memberDelete(event:CloseEvent):void
 			{
 				if(event.detail == mx.controls.Alert.OK) {
@@ -194,8 +195,8 @@
 							 itemEditEnd="grid_itemEditEndHandler(event)">
 					<mx:columns>
 						<mx:DataGridColumn dataField="id" headerText="ID" width="30"  editable="false"/>
-						<mx:DataGridColumn dataField="name" headerText="Nazwa" />
-						<mx:DataGridColumn dataField="description" headerText="Opis"/>
+						<mx:DataGridColumn dataField="name" headerText="Nazwa" editable="false" />
+						<mx:DataGridColumn dataField="description" headerText="Opis" editable="false"/>
 						<mx:DataGridColumn dataField="createdAt" headerText="Utworzono" editable="false"/>
 						<mx:DataGridColumn dataField="modifiedAt" headerText="Zmieniono" editable="false"/>
 					</mx:columns>

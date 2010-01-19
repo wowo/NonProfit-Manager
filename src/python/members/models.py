@@ -29,16 +29,15 @@ class Member(models.Model):
   name = models.CharField("imię", max_length=200)
   surname = models.CharField("nazwisko", max_length=200)
   fatherName = models.CharField("imię ojca", max_length=200, blank=True, null=True)
-  birthDate = models.DateField("data urodzenia")
+  birthDate = models.DateField("data urodzenia", blank=True, null=True)
   birthPlace = models.CharField("miejsce urodzenia", max_length=200, blank=True, null=True)
   occupation = models.CharField("zawód", max_length=200, blank=True, null=True)
   workplace = models.CharField("miejsce pracy", max_length=200, blank=True, null=True)
-  accessionDate = models.DateField("data wstąpienia", max_length=200)
+  accessionDate = models.DateField("data wstąpienia", max_length=200, blank=True, null=True)
   dismissDate = models.DateField("data rezygnacji", max_length=200, default=None, null=True, blank=True)
-  functions = models.CharField("funkcje", max_length=200, blank=True, null=True) #wywalic to stad
   address = models.TextField("adres", blank=True, null=True)
-  identityCardNumber = models.CharField("numer legitymacji", max_length=200, unique=True, blank=True, null=True)
-  pesel = models.CharField("pesel", max_length=15, unique=True)
+  identityCardNumber = models.CharField("numer legitymacji", max_length=200, blank=True, null=True)
+  pesel = models.CharField("pesel", max_length=15, blank=True, null=True)
   email = models.EmailField("email", blank=True, null=True)
   phone = models.CharField("numer telefonu", max_length=200, blank=True, null=True)
   ggNumber = models.CharField("numer Gadu Gadu", max_length=200, blank=True, null=True)
@@ -64,6 +63,7 @@ class Member(models.Model):
     return rows
 
   def saveFromFlex(self, request, member):
+    logging.debug(member)
     member.save()
     return member
 

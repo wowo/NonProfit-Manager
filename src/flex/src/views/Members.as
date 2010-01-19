@@ -36,14 +36,33 @@ package views
 		 * @param event
 		 * 
 		 */
-		public static function	saveMember(event:MouseEvent):void
+		public static function addMember(event:MouseEvent):void
 		{
 			var newMember:Member = new Member();
 			newMember.id = 0;
 			newMember.name = Application.application.memberForm.nameInput.text;
 			newMember.surname = Application.application.memberForm.surnameInput.text;
 			newMember.fatherName = Application.application.memberForm.fatherNameInput.text;
-			Application.application.membersRO.save(newMember);
+			newMember.membershipType = Application.application.memberForm.membershipTypeInput.value;
+			
+			newMember.pesel = Application.application.memberForm.peselInput.text;
+			newMember.identityCardNumber = Application.application.memberForm.identityCardNumberInput.text;
+			
+			newMember.birthDate = Application.application.memberForm.birthDateInput.selectedDate;
+			newMember.accessionDate = Application.application.memberForm.accessionDateInput.selectedDate;
+			newMember.dismissDate = Application.application.memberForm.dismissDateInput.selectedDate;
+			
+			newMember.address = Application.application.memberForm.addressInput.text;
+			newMember.occupation = Application.application.memberForm.occupationInput.text;
+			newMember.workplace = Application.application.memberForm.workplaceInput.text;
+			
+			newMember.phone = Application.application.memberForm.phoneInput.text;
+			newMember.email = Application.application.memberForm.emailInput.text;
+			newMember.ggNumber = Application.application.memberForm.ggNumberInput.text;
+			newMember.comments = Application.application.memberForm.commentsInput.text;
+			
+			Application.application.membersRO.saveFromFlex(newMember);
+			//Application.application.grid.dataProvider.AddItem(returnedMember);
 		}
 		
 		/**

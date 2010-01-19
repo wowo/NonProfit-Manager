@@ -1,22 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
 	<mx:Script>
 		<![CDATA[
 			import views.Members;
 		]]>
 	</mx:Script>
 	<mx:Form>
-		<mx:FormItem label="Imię">
-			<mx:TextInput id="nameInput" />
+		<mx:FormHeading label="Podstawowe" />
+		<mx:FormItem label="Imię"><mx:TextInput id="nameInput" /></mx:FormItem>
+		<mx:FormItem label="Nazwisko"><mx:TextInput id="surnameInput"/></mx:FormItem>
+		<mx:FormItem label="Imię ojca"><mx:TextInput id="fatherNameInput"/></mx:FormItem>
+		<mx:FormItem label="Typ członkowstwa">
+			<mx:ComboBox id="membershipTypeInput">
+				<mx:ArrayCollection>
+					<mx:Object label="Czynny" data="C"/>
+					<mx:Object label="Wspierający" data="w"/>
+					<mx:Object label="Honorowy" data="C"/>
+				</mx:ArrayCollection>
+			</mx:ComboBox>
 		</mx:FormItem>
-		<mx:FormItem label="Nazwisko">
-			<mx:TextInput id="surnameInput"/>
-		</mx:FormItem>
-		<mx:FormItem label="Imię ojca">
-			<mx:TextInput id="fatherNameInput"/>
-		</mx:FormItem>
+		
+		<mx:FormHeading label="Identyfikatory" />
+		<mx:FormItem label="PESEL"><mx:TextInput id="peselInput"/></mx:FormItem>
+		<mx:FormItem label="Numer legitymacji"><mx:TextInput id="identityCardNumberInput"/></mx:FormItem>
+		
+		<mx:FormHeading label="Daty" />
+		<mx:FormItem label="Data urodzenia"><mx:DateField id="birthDateInput"/></mx:FormItem>
+		<mx:FormItem label="Data wstąpienia"><mx:DateField id="accessionDateInput"/></mx:FormItem>
+		<mx:FormItem label="Data rezygnacji"><mx:DateField id="dismissDateInput"/></mx:FormItem>
+		
+		<mx:FormHeading label="Adres i zawód" />
+		<mx:FormItem label="Adres"><mx:TextArea id="addressInput"/></mx:FormItem>
+		<mx:FormItem label="Zawód"><mx:TextInput id="occupationInput"/></mx:FormItem>
+		<mx:FormItem label="Miejsce pracy"><mx:TextInput id="workplaceInput"/></mx:FormItem>
+		
+		<mx:FormHeading label="Kontakt" />
+		<mx:FormItem label="Numer telefonu"><mx:TextInput id="phoneInput"/></mx:FormItem>
+		<mx:FormItem label="Email"><mx:TextInput id="emailInput"/></mx:FormItem>
+		<mx:FormItem label="Numer Gadu Gadu"><mx:TextInput id="ggNumberInput"/></mx:FormItem>
+		<mx:FormItem label="Uwagi"><mx:TextArea id="commentsInput"/></mx:FormItem>
+		
 		<mx:FormItem>
-			<mx:Button click="views.Members.saveMember(event)" label="Zapisz"/>
+			<mx:Button click="views.Members.addMember(event)" label="Dodaj"/>
 		</mx:FormItem>
 	</mx:Form>
+	<mx:EmailValidator source="{emailInput}" property="text" 
+					   missingAtSignError="Email powinien posiadać małpkę (@)"
+					   missingUsernameError="Brakuje nazwy przed małpką (@)"
+					   missingPeriodInDomainError="Brakuje kropki w nazwie domeny po małpce (@)"/>
+	<mx:PhoneNumberValidator source="{phoneInput}" property="text" minDigits="9" 
+							 wrongLengthError="Numer powinien posiadać conajmniej 9 cyfr (bez zer na początku)"/>
 </mx:Canvas>
