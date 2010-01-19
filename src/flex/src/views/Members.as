@@ -9,7 +9,6 @@ package views
 	import mx.containers.Form;
 	import mx.containers.FormItem;
 	import mx.containers.TitleWindow;
-	import mx.controls.Button;
 	import mx.controls.CheckBox;
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.core.Application;
@@ -62,7 +61,7 @@ package views
 				}
 			} 
 			
-			flash.external.ExternalInterface.call("window.open", "http://127.0.0.1:8000/report/member?method=pdf&" + columns.join("&"));
+			flash.external.ExternalInterface.call("window.open", Application.application.getEndpointUrl() + "/report/member?method=pdf&" + columns.join("&"));
 		}
 		
 		/**

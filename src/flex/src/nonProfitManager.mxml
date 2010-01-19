@@ -122,7 +122,7 @@
 				}
 			}
 			
-			protected function getEndpointUrl():String
+			public function getEndpointUrl():String
 			{
 				var endpoint:String = 'http://';
 				if (this.url.indexOf("file://") == 0) {
