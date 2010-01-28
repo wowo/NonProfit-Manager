@@ -153,7 +153,14 @@
 					initialize="application1_initializeHandler(event)" change="selectHandler(event)"
 					itemEditEnd="grid_itemEditEndHandler(event)">
 					<mx:columns>
-						<mx:DataGridColumn id="idColumn" dataField="id" headerText="ID" width="30"  editable="false"/>
+						<mx:DataGridColumn width="25"  editable="false">
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:CheckBox paddingLeft="5"/>
+								</mx:Component>						
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn id="idColumn" dataField="id" headerText="ID" width="30"  editable="false" sortable="false"/>
 						<mx:DataGridColumn id="idName" dataField="name" headerText="Imię" />
 						<mx:DataGridColumn id="idSurname" dataField="surname" headerText="Nazwisko"/>
 						<mx:DataGridColumn id="idFatherName" dataField="fatherName" headerText="Imię ojca"/>
@@ -168,6 +175,7 @@
 						<mx:DataGridColumn id="idOccupation" dataField="occupation" headerText="Zawód" visible="false"/>
 						<mx:DataGridColumn id="idWorkplace" dataField="workplace" headerText="Miejsce pracy" visible="false"/>
 						<mx:DataGridColumn id="idAccessionDate" dataField="accessionDate" headerText="Data wstąpienia"/>
+						<mx:DataGridColumn id="idFunctions" dataField="functions" headerText="Funkcje"/>
 						<mx:DataGridColumn id="idDismissDate" dataField="dismissDate" headerText="Data rezygnacji"/>
 						<mx:DataGridColumn id="idCreatedAt" dataField="createdAt" headerText="Utworzono" editable="false"/>
 					</mx:columns>

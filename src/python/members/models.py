@@ -44,6 +44,7 @@ class Member(models.Model):
   membershipType= models.CharField("typ członkowstwa", max_length=1, choices=membershipTypeEnum, default='C')
   comments = models.TextField("uwagi", blank=True, null=True)
 #  sections = models.ManyToManyField(Section)
+  functions = models.CharField("funkcje", max_length=200, blank=True, null=True)
   createdAt = models.DateTimeField("utworzono", auto_now_add=True)
   updatedAt = models.DateTimeField("zmodyfikowano", auto_now=True)
 

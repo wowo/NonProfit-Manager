@@ -19,6 +19,7 @@
 				</mx:ArrayCollection>
 			</mx:ComboBox>
 		</mx:FormItem>
+		<mx:FormItem label="Funkcje"><mx:TextArea id="functionsInput"/></mx:FormItem>
 		
 		<mx:FormHeading label="Identyfikatory" />
 		<mx:FormItem label="PESEL"><mx:TextInput id="peselInput"/></mx:FormItem>

@@ -6,6 +6,7 @@ package views
 	
 	import models.Member;
 	
+	import mx.collections.SortField;
 	import mx.containers.Form;
 	import mx.containers.FormItem;
 	import mx.containers.TitleWindow;
@@ -44,6 +45,7 @@ package views
 			newMember.surname = Application.application.memberForm.surnameInput.text;
 			newMember.fatherName = Application.application.memberForm.fatherNameInput.text;
 			newMember.membershipType = Application.application.memberForm.membershipTypeInput.value;
+			newMember.functions = Application.application.memberForm.functionsInput.text;
 			
 			newMember.pesel = Application.application.memberForm.peselInput.text;
 			newMember.identityCardNumber = Application.application.memberForm.identityCardNumberInput.text;
@@ -73,14 +75,24 @@ package views
 		public static function generateReport(event:MouseEvent):void
 		{
 			var columns:Array = new Array();
+			var sortCol:String = '';
+			var sortDir:String = 'ASC';
+			
 			for (var i in Application.application.grid.columns) {
 				var col:DataGridColumn = Application.application.grid.columns[i] as DataGridColumn;
-				if (col.visible) {
+				if (col.visible && col.dataField != null) {
 					columns.push("col[]=" +col.dataField);
 				}
 			} 
-			
-			flash.external.ExternalInterface.call("window.open", Application.application.getEndpointUrl() + "/report/member?method=pdf&" + columns.join("&"));
+			if (Application.application.grid.dataProvider.sort) {
+				var sort:SortField = Application.application.grid.dataProvider.sort.fields[0];
+				sortCol = sort.name;
+				sortDir = sort.descending ? 'DESC' : 'ASC';
+			}
+			flash.external.ExternalInterface.call(
+				"window.open", 
+				Application.application.getEndpointUrl() + "/report/member?" + columns.join("&") + '&sortCol=' + sortCol + '&sortDir=' + sortDir
+			);
 		}
 		
 		/**
