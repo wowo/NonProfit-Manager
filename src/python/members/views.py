@@ -20,7 +20,9 @@ def index(request, reportName):
   if request.GET.get('sortCol'):
     query = query.order_by('%s%s' % ('-' if request.GET.get('sortDir') == 'DESC' else '', request.GET.get('sortCol')))
 
-  query = query.filter(pk__in=[2, 7, 8, 11, 10, 14, 16, 21, 27, 29, 31, 32, 30, 34, 35, 40, 41, 42, 43, 45, 1, 46, 49, 56, 12])
+  if request.REQUEST.getlist('pk[]'):
+    query = query.filter(pk__in=request.REQUEST.getlist('pk[]')) 
+
   report = Report(
     Page(orientation='landscape', withCounterColumn=False), 
     Info(), 

@@ -75,15 +75,25 @@ package views
 		public static function generateReport(event:MouseEvent):void
 		{
 			var columns:Array = new Array();
+			var primaryKeys:Array = new Array();
 			var sortCol:String = '';
 			var sortDir:String = 'ASC';
 			
 			for (var i in Application.application.grid.columns) {
 				var col:DataGridColumn = Application.application.grid.columns[i] as DataGridColumn;
 				if (col.visible && col.dataField != null) {
-					columns.push("col[]=" +col.dataField);
+					columns.push("col[]=" + col.dataField);
 				}
-			} 
+			}
+			
+			for (var i in Application.application.grid.dataProvider) {
+				var member:Member = Application.application.grid.dataProvider[i] as Member;
+				if (member.selected) {
+					primaryKeys.push("pk[]=" + member.id);
+				}
+				
+			}
+			
 			if (Application.application.grid.dataProvider.sort) {
 				var sort:SortField = Application.application.grid.dataProvider.sort.fields[0];
 				sortCol = sort.name;
@@ -91,7 +101,7 @@ package views
 			}
 			flash.external.ExternalInterface.call(
 				"window.open", 
-				Application.application.getEndpointUrl() + "/report/member?" + columns.join("&") + '&sortCol=' + sortCol + '&sortDir=' + sortDir
+				Application.application.getEndpointUrl() + "/report/member?" + columns.join("&") + '&' + primaryKeys.join("&") + '&sortCol=' + sortCol + '&sortDir=' + sortDir
 			);
 		}
 		

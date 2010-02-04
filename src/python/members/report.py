@@ -79,6 +79,10 @@ class DataProvider:
     Constructor
   """
   def __init__(self, objects, columns, withCounterColumn):
+    
+    for column in columns:
+      if getattr(objects[0], column, '__not_used__') == '__not_used__':
+        columns.remove(column)
     self.columns = columns
     self.labels = self.getLabelsFromModel(columns, objects[0])
     self.rows   = self.convert(objects, columns)

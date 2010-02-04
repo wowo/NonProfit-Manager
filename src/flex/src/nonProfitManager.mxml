@@ -153,10 +153,10 @@
 					initialize="application1_initializeHandler(event)" change="selectHandler(event)"
 					itemEditEnd="grid_itemEditEndHandler(event)">
 					<mx:columns>
-						<mx:DataGridColumn width="25"  editable="false">
+						<mx:DataGridColumn width="25"  editable="false" dataField="selected">
 							<mx:itemRenderer>
 								<mx:Component>
-									<mx:CheckBox paddingLeft="5"/>
+									<mx:CheckBox paddingLeft="5" click="data.selected = !data.selected"/>
 								</mx:Component>						
 							</mx:itemRenderer>
 						</mx:DataGridColumn>

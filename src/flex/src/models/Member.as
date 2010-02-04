@@ -26,6 +26,7 @@ package models
 		public var sections:String;
 		public var createdAt:Date;
 		public var updatedAt:Date;
+		public var selected:Boolean;
 
 		public function Member()
 		{
