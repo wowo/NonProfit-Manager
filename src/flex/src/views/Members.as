@@ -109,14 +109,16 @@ package views
 			
 			var form:Form = new Form();
 			for (var i in Application.application.grid.columns) {
-				var item:FormItem = new FormItem();
-				item.label = DataGridColumn(Application.application.grid.columns[i]).headerText;
-				var checkbox:CheckBox = new CheckBox();
-				checkbox.selected = DataGridColumn(Application.application.grid.columns[i]).visible;
-				checkbox.name = DataGridColumn(Application.application.grid.columns[i]).dataField;
-				checkbox.addEventListener(Event.CHANGE, toggleColumn);
-				item.addChild(checkbox);
-				form.addChild(item)
+				if (DataGridColumn(Application.application.grid.columns[i]).dataField) {
+					var item:FormItem = new FormItem();
+					item.label = DataGridColumn(Application.application.grid.columns[i]).headerText;
+					var checkbox:CheckBox = new CheckBox();
+					checkbox.selected = DataGridColumn(Application.application.grid.columns[i]).visible;
+					checkbox.name = DataGridColumn(Application.application.grid.columns[i]).dataField;
+					checkbox.addEventListener(Event.CHANGE, toggleColumn);
+					item.addChild(checkbox);
+					form.addChild(item);
+				}
 			}
 			Application.application.window.addChild(form);
 			
