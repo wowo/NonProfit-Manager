@@ -61,6 +61,7 @@ class Member(models.Model):
 
   def getAllItems(self, request):
     rows = Member.objects.order_by('surname')
+    print 'Members %d' % len(rows)
     return rows
 
   def saveFromFlex(self, request, member):
@@ -70,23 +71,3 @@ class Member(models.Model):
 
   def remove(self, request, member):
     member.delete()
-
-
-class Award(models.Model):
-  class Meta:
-    ordering = ['name']
-    get_latest_by = 'createdAt'
-    verbose_name = 'Odznaczenie'
-    verbose_name_plural = 'Odznaczenia'
-    
-  def __unicode__(self):
-    return self.name
-
-  name = models.CharField("nazwa", max_length=255)
-  description = models.TextField("opis", blank=True, null=True)
-  createdAt = models.DateTimeField("utworzono", auto_now_add=True)
-  updatedAt = models.DateTimeField("zmodyfikowano", auto_now=True)
-
-  def getAllItems(self, request):
-    rows = Award.objects.order_by('name')
-    return rows

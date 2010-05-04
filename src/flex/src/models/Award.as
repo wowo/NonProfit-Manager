@@ -1,9 +1,9 @@
 package models
-{
-	[RemoteClass(alias="models.Member")]	
+{	
 	import mx.core.Application;
 	import mx.events.FlexEvent;
 	import mx.rpc.events.ResultEvent;
+	[RemoteClass(alias="members.mongoModels.Award")]
 	public class Award
 	{
 		public var id:int;
@@ -27,7 +27,7 @@ package models
 		 * @param event
 		 * 
 		 */
-		public static function getAllItemsResultHandler(event:ResultEvent):void
+		public static function getAllResultHandler(event:ResultEvent):void
 		{
 			Application.application.awardGrid.dataProvider = event.result;
 		}
@@ -39,7 +39,7 @@ package models
 		 */
 		public static function gridInitialize(event:FlexEvent):void
 		{
-			Application.application.awardsRO.getAllItems();
+			Application.application.awardsRO.getAll();
 		}
 	}
 }

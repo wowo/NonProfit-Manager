@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from members.models import Member, Section
 from members.report import Report, Page, Info
+from members.mongoModels import Award
 
 from django import http
 from django.template.loader import get_template
@@ -45,3 +46,9 @@ def write_pdf(template_src, context_dict):
       return http.HttpResponse(result.getvalue(), mimetype='application/pdf')
     else:
       return http.HttpResponse("Gremlin's ate your pdf! %s" % html)
+
+
+def mongo(request):
+  award = Award()
+  items = award.getAll(None)
+  return http.HttpResponse(items)

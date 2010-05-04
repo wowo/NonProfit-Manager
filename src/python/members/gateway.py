@@ -1,5 +1,6 @@
 from pyamf.remoting.gateway.django import DjangoGateway
 import members.models as models
+from members.mongoModels import Award
 import logging
 import pyamf
 
@@ -10,11 +11,11 @@ logging.basicConfig(
 )
 
 pyamf.register_class(models.Member, 'models.Member')
-pyamf.register_class(models.Award, 'models.Award')
+pyamf.register_class(Award, 'members.mongoModels.Award')
 
 services = {
   'Members': models.Member,
-  'Awards': models.Award,
+  'Awards': Award,
 }
 
 echoGateway = DjangoGateway(services, logger=logging)
