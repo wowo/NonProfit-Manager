@@ -3,7 +3,7 @@ package models
 	import mx.core.Application;
 	import mx.events.FlexEvent;
 	import mx.rpc.events.ResultEvent;
-	[RemoteClass(alias="members.mongoModels.Award")]
+	[RemoteClass(alias="Award")]
 	public class Award
 	{
 		public var id:int;

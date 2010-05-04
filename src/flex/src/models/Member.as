@@ -1,7 +1,7 @@
 package models
 {
 	[Bindable]
-	[RemoteClass(alias="models.Member")]	
+	[RemoteClass(alias="Member")]	
 	public class Member
 	{
 		public var id:int;

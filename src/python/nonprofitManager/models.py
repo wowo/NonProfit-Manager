@@ -60,7 +60,7 @@ class Member(models.Model):
     return date.today().year - self.accessionDate.year
   yearsOfService.short_description = 'Lata służby'
 
-  def getAllItems(self, request):
+  def getAll(self, request):
     rows = Member.objects.order_by('surname')
     print 'Members %d' % len(rows)
     return rows

@@ -45,18 +45,18 @@
 			
 			protected function memberSaveResultHandler(event:ResultEvent):void
 			{
-				membersRO.getAllItems();
+				membersRO.getAll();
 				PopUpManager.removePopUp(window);
 			}
 			
 			protected function memberDeleteResultHandler(event:ResultEvent):void
 			{
-				membersRO.getAllItems();
+				membersRO.getAll();
 			}
 			
 			protected function application1_initializeHandler(event:FlexEvent):void
 			{
-				membersRO.getAllItems();
+				membersRO.getAll();
 			}
 		
 			protected function memberDeleteConfirm(event:MouseEvent):void
@@ -137,7 +137,7 @@
 		]]>
 	</mx:Script>
 	<mx:RemoteObject  id="membersRO" endpoint="" destination="Members">
-		<mx:method name="getAllItems" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
+		<mx:method name="getAll" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
 		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
 	</mx:RemoteObject>
@@ -160,7 +160,6 @@
 								</mx:Component>						
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn id="idColumn" dataField="id" headerText="ID" width="30"  editable="false" sortable="false"/>
 						<mx:DataGridColumn id="idName" dataField="name" headerText="Imię" />
 						<mx:DataGridColumn id="idSurname" dataField="surname" headerText="Nazwisko"/>
 						<mx:DataGridColumn id="idFatherName" dataField="fatherName" headerText="Imię ojca"/>

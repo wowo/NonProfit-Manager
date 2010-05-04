@@ -23,3 +23,25 @@ class Award(mongoModel):
   def __str__(self):
     return str(self.__dict__)
     
+
+class Member(mongoModel):
+  def yearsOfService(self):
+    return date.today().year - self.accessionDate.year
+  yearsOfService.short_description = 'Lata służby'
+
+  def getAll(self, request):
+    results = []
+    for document in self.getDb().members.find():
+      member = Member()
+      member.populate(document)
+      results.append(member)
+    print 'Members %d' % len(results)
+    return results
+
+  def saveFromFlex(self, request, member):
+    logging.debug(member)
+    member.save()
+    return member
+
+  def remove(self, request, member):
+    member.delete()

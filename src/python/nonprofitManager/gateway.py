@@ -1,6 +1,6 @@
 from pyamf.remoting.gateway.django import DjangoGateway
 import nonprofitManager.models as models
-from nonprofitManager.mongoModels import Award
+from nonprofitManager.mongoModels import Award, Member
 import logging
 import pyamf
 
@@ -10,11 +10,11 @@ logging.basicConfig(
   format='%(asctime)s %(levelname)-5.5s [%(name)s] %(message)s'
 )
 
-pyamf.register_class(models.Member, 'models.Member')
-pyamf.register_class(Award, 'nonprofitManager.mongoModels.Award')
+pyamf.register_class(Member, 'Member')
+pyamf.register_class(Award, 'Award')
 
 services = {
-  'Members': models.Member,
+  'Members': Member,
   'Awards': Award,
 }
 
