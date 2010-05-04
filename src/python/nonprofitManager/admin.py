@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from members.models import *
+from nonprofitManager.models import *
 from django.contrib import admin
 
 class MemberAdmin(admin.ModelAdmin):

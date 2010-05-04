@@ -16,6 +16,7 @@ class Member(models.Model):
     get_latest_by = 'createdAt'
     verbose_name = 'Członek'
     verbose_name_plural = 'Członkowie'
+    db_table = 'members_member'
     
   def __unicode__(self):
     return '%s %s' % (self.name, self.surname)

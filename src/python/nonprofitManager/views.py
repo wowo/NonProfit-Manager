@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
-from members.models import Member, Section
-from members.report import Report, Page, Info
-from members.mongoModels import Award
+from nonprofitManager.models import Member, Section
+from nonprofitManager.report import Report, Page, Info
+from nonprofitManager.mongoModels import Award
 
 from django import http
 from django.template.loader import get_template
