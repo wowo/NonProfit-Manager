@@ -3,6 +3,7 @@ import nonprofitManager.models as models
 from nonprofitManager.mongoModels import Award, Member
 import logging
 import pyamf
+import pymongo
 
 logging.basicConfig(
   filename='/tmp/django.log',

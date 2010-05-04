@@ -9,6 +9,7 @@
 			
 			import mx.containers.TitleWindow;
 			import mx.containers.VBox;
+			import mx.controls.Alert;
 			import mx.controls.Button;
 			import mx.controls.DateChooser;
 			import mx.controls.Label;
@@ -16,6 +17,7 @@
 			import mx.events.CloseEvent;
 			import mx.events.DataGridEvent;
 			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
 			import mx.utils.URLUtil;
@@ -104,16 +106,6 @@
 			}
 
 
-			protected function grid_itemEditEndHandler(event:DataGridEvent):void
-			{
-				var oldValue = Member(grid.selectedItem)[event.dataField];
-				var newValue = TextInput(event.currentTarget.itemEditorInstance).text;
-				if (newValue != oldValue) {
-					var memberToSave:Member = grid.selectedItem as Member;
-					memberToSave[event.dataField] = newValue;
-					membersRO.saveFromFlex(memberToSave);
-				}
-			}
 
 			protected function application2_initializeHandler(event:FlexEvent):void
 			{
@@ -134,8 +126,32 @@
 				return endpoint;
 			}
 
+			protected function grid_itemDoubleClickHandler(event:ListEvent):void
+			{
+				if (event.isDefaultPrevented()) {
+					return;
+				} else {
+					grid.editedItemPosition = {columnIndex: event.columnIndex + 1, rowIndex: event.rowIndex};
+					grid.editable = true;
+				}
+			}
+			
+			protected function grid_itemEditEndHandler(event:DataGridEvent):void
+			{
+				var oldValue = Member(grid.selectedItem)[event.dataField];
+				var newValue = TextInput(event.currentTarget.itemEditorInstance).text;
+				if (newValue != oldValue) {
+					var memberToSave:Member = grid.selectedItem as Member;
+					memberToSave[event.dataField] = newValue;
+					membersRO.saveFromFlex(memberToSave);
+				}
+				grid.editable = false;
+			}
+
+
 		]]>
 	</mx:Script>
+	
 	<mx:RemoteObject  id="membersRO" endpoint="" destination="Members">
 		<mx:method name="getAll" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
 		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
@@ -149,9 +165,9 @@
 	<mx:Canvas id="canvas" width="100%" height="100%" top="5" left="5" right="5" bottom="5">
 		<mx:TabNavigator width="100%" height="100%">
 			<mx:VBox label="Rejestr członków" icon="@Embed(source='..//icons/system-users.png')" height="100%" width="100%">
-				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" editable="true"
+				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" doubleClickEnabled="true"
 					initialize="application1_initializeHandler(event)" change="selectHandler(event)"
-					itemEditEnd="grid_itemEditEndHandler(event)">
+					itemEditEnd="grid_itemEditEndHandler(event)" itemDoubleClick="grid_itemDoubleClickHandler(event)">
 					<mx:columns>
 						<mx:DataGridColumn width="25"  editable="false" dataField="selected">
 							<mx:itemRenderer>
@@ -160,6 +176,7 @@
 								</mx:Component>						
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
+						<mx:DataGridColumn id="idId" dataField="_id" headerText="ID" visible="false"/>
 						<mx:DataGridColumn id="idName" dataField="name" headerText="Imię" />
 						<mx:DataGridColumn id="idSurname" dataField="surname" headerText="Nazwisko"/>
 						<mx:DataGridColumn id="idFatherName" dataField="fatherName" headerText="Imię ojca"/>
@@ -198,8 +215,7 @@
 			</mx:VBox>
 			<mx:VBox label="Odznaczenia"  icon="@Embed(source='..//icons/application-certificate.png')" height="100%" width="100%">
 				<mx:DataGrid id="awardGrid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" editable="true"
-							 initialize="Award.gridInitialize(event)" change="selectHandler(event)"
-							 itemEditEnd="grid_itemEditEndHandler(event)">
+							 initialize="Award.gridInitialize(event)" change="selectHandler(event)" doubleClickEnabled="true">
 					<mx:columns>
 						<mx:DataGridColumn dataField="name" headerText="Nazwa" editable="false" />
 					</mx:columns>

@@ -40,7 +40,7 @@ package views
 		public static function addMember(event:MouseEvent):void
 		{
 			var newMember:Member = new Member();
-			newMember.id = 0;
+			newMember._id = '';
 			newMember.name = Application.application.memberForm.nameInput.text;
 			newMember.surname = Application.application.memberForm.surnameInput.text;
 			newMember.fatherName = Application.application.memberForm.fatherNameInput.text;
@@ -89,7 +89,7 @@ package views
 			for (var i in Application.application.grid.dataProvider) {
 				var member:Member = Application.application.grid.dataProvider[i] as Member;
 				if (member.selected) {
-					primaryKeys.push("pk[]=" + member.id);
+					primaryKeys.push("pk[]=" + member._id);
 				}
 				
 			}

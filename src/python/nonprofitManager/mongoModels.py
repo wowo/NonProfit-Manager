@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
+import logging
+import pymongo
 from pymongo import Connection
 
 class mongoModel:
   def populate(self, dict):
     for key in dict:
       self.__dict__[key] = dict[key]
+    self.__dict__['_id'] = unicode(self.__dict__['_id'])
+
+  def getMongoDict(self):
+    dict = self.__dict__
+    dict['_id'] = pymongo.objectid.ObjectId(dict['_id'])
+    return dict
 
   def getDb(self):
     con = Connection()
     return con.nonprofit
+
 
 class Award(mongoModel):
   def getAll(self, request):
@@ -38,8 +47,10 @@ class Member(mongoModel):
     print 'Members %d' % len(results)
     return results
 
+  def save(self):
+    self.getDb().members.update({'_id':  pymongo.objectid.ObjectId(self._id)}, self.getMongoDict())
+
   def saveFromFlex(self, request, member):
-    logging.debug(member)
     member.save()
     return member
 

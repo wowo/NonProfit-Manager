@@ -4,7 +4,7 @@ package models
 	[RemoteClass(alias="Member")]	
 	public class Member
 	{
-		public var id:int;
+		public var _id:String;
 		public var name:String;
 		public var surname:String;
 		public var fatherName:String;
@@ -35,7 +35,7 @@ package models
 		
 		public function toString():String
 		{
-			return "#" + this.id + " " + this.name + " " + this.surname;
+			return "#" + this._id + " " + this.name + " " + this.surname;
 		}
 
 	}

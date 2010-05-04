@@ -51,4 +51,8 @@ def write_pdf(template_src, context_dict):
 def mongo(request):
   award = Award()
   items = award.getAll(None)
-  return http.HttpResponse(items)
+  print len(items)
+  print type(items[0]._id)
+  id = str(items[0]._id)
+  print type(id)
+  return http.HttpResponse(items[0]._id)
