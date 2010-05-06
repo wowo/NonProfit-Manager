@@ -47,11 +47,11 @@ class Member(mongoModel):
     print 'Members %d' % len(results)
     return results
 
-  def save(self):
+  def saveObject(self):
     self.getDb().members.update({'_id':  pymongo.objectid.ObjectId(self._id)}, self.getMongoDict())
 
-  def saveFromFlex(self, request, member):
-    member.save()
+  def save(self, request, member):
+    member.saveObject()
     return member
 
   def remove(self, request, member):

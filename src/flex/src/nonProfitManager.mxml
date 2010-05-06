@@ -1,168 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application name="app" xmlns:mx="http://www.adobe.com/2006/mxml" 
-				xmlns:custom="components.*" layout="absolute" initialize="application2_initializeHandler(event)">
+				xmlns:custom="view.components.*" layout="absolute" 
+				initialize="Controller.applicationInitialize(event)">
 	<mx:Script>
 		<![CDATA[
-			import components.*;
-			
 			import controllers.*;
+			import views.components.*;
 			
-			import models.*;
+			public var members:MembersController = new MembersController(Application(this));
+			public var awards:AwardsController   = new AwardsController(Application(this));
 			
-			import mx.containers.TitleWindow;
-			import mx.containers.VBox;
-			import mx.controls.Alert;
-			import mx.controls.Button;
-			import mx.controls.DateChooser;
-			import mx.controls.Label;
-			import mx.controls.TextInput;
-			import mx.events.CloseEvent;
-			import mx.events.DataGridEvent;
-			import mx.events.FlexEvent;
-			import mx.events.ListEvent;
-			import mx.managers.PopUpManager;
-			import mx.rpc.events.ResultEvent;
-			import mx.utils.URLUtil;
-			
-			import views.*;
-			
-			
-			public var window:TitleWindow;
-			public var nameInput:TextInput = new TextInput();
-			public var surnameInput:TextInput = new TextInput();
-			public var fatherNameInput:TextInput = new TextInput();
-			public var birthDateInput:DateChooser = new DateChooser();
+			public var window:mx.containers.TitleWindow;
 			public var memberForm:MemberForm;
-			
-			public var awards:AwardsController   = new AwardsController(this as Application);
-			public var members:MembersController = new MembersController(this as Application); 
+			public var selectedItem:Object = null;
 			
 			[Bindable] 
 			public var rowsCount:Number = 0;
-			public var selectedItem:Member;
-			
-			protected function test_resultHandler(event:ResultEvent):void
-			{
-				grid.dataProvider = event.result;
-				rowsCount = 0;
-				for (var m:Object in grid.dataProvider) {
-					rowsCount++;
-				}
-			}
-			
-			protected function memberSaveResultHandler(event:ResultEvent):void
-			{
-				membersRO.getAll();
-				PopUpManager.removePopUp(window);
-			}
-			
-			protected function memberDeleteResultHandler(event:ResultEvent):void
-			{
-				membersRO.getAll();
-			}
-			
-			protected function application1_initializeHandler(event:FlexEvent):void
-			{
-				membersRO.getAll();
-			}
-		
-			protected function memberDeleteConfirm(event:MouseEvent):void
-			{
-				var members:String = "";
-				for (var index:Object in grid.selectedItems) {
-					members += "\n\t" + Member(grid.selectedItems[index]).toString();
-				} 
-				mx.controls.Alert.show("Czy napewno usunąć następujących członków?" + members, "Osrzeżenie", 
-					mx.controls.Alert.OK|mx.controls.Alert.CANCEL,this, memberDelete)
-			}
-			
-			protected function memberDelete(event:CloseEvent):void
-			{
-				if(event.detail == mx.controls.Alert.OK) {
-					for (var index:Object in grid.selectedItems) {
-						membersRO.remove(grid.selectedItems[index] as Member);
-					}
-				}
-			}
-			
-			public function removeMe(event:CloseEvent):void 
-			{
-				PopUpManager.removePopUp(window);
-			}
-			
-			protected function dodajCzlonka(event:MouseEvent):void
-			{
-				window = new TitleWindow();
-				window.title = "Dodaj członka";
-				window.showCloseButton = true;
-				window.addEventListener(CloseEvent.CLOSE, removeMe);
-				
-				memberForm = new MemberForm();
-				window.addChild(memberForm);
-				
-				
-				TitleWindow(PopUpManager.addPopUp(window, this,true));
-				PopUpManager.centerPopUp(window);
-			}
-			
-			private function selectHandler(event:Event):void
-			{
-				selectedItem = event.target.selectedItem as Member;
-			}
-
-
-
-			protected function application2_initializeHandler(event:FlexEvent):void
-			{
-				var remoteObjects:Array = new Array(membersRO, awardsRO);
-				for (var i:int; i < remoteObjects.length; i++) {
-					remoteObjects[i].endpoint = this.getEndpointUrl() +  '/gateway/';
-				}
-			}
-			
-			public function getEndpointUrl():String
-			{
-				var endpoint:String = 'http://';
-				if (this.url.indexOf("file://") == 0) {
-					endpoint += '127.0.0.1:8000';
-				} else {
-					endpoint += URLUtil.getServerNameWithPort(this.url);
-				}
-				return endpoint;
-			}
-
-			protected function grid_itemDoubleClickHandler(event:ListEvent):void
-			{
-				if (event.isDefaultPrevented()) {
-					return;
-				} else {
-					grid.editedItemPosition = {columnIndex: event.columnIndex + 1, rowIndex: event.rowIndex};
-					grid.editable = true;
-				}
-			}
-			
-			protected function grid_itemEditEndHandler(event:DataGridEvent):void
-			{
-				var oldValue:String = Member(grid.selectedItem)[event.dataField];
-				var newValue:String = TextInput(event.currentTarget.itemEditorInstance).text;
-				if (newValue != oldValue) {
-					var memberToSave:Member = grid.selectedItem as Member;
-					memberToSave[event.dataField] = newValue;
-					membersRO.saveFromFlex(memberToSave);
-				}
-				grid.editable = false;
-			}
-
-
 		]]>
 	</mx:Script>
 	
-	<mx:RemoteObject  id="membersRO" endpoint="" destination="Members">
-		<mx:method name="getAll" result="test_resultHandler(event)" fault="Controller.fault(event.toString())" />
-		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="Controller.fault(event.toString())"/>
-		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="Controller.fault(event.toString())"/>
+	<mx:RemoteObject id="memberRO" destination="Members">
+		<mx:method name="getAll" result="members.getAllResultHandler(event)" fault="Controller.fault(event.toString())"/>
+		<mx:method name="save" 	 result="members.saveResultHandler(event)"   fault="Controller.fault(event.toString())"/>
+		<mx:method name="remove" result="members.removeResultHandler(event)" fault="Controller.fault(event.toString())"/>
 	</mx:RemoteObject>
-	<mx:RemoteObject  id="awardsRO" endpoint="" destination="Awards">
+	<mx:RemoteObject id="awardsRO" destination="Awards">
 		<mx:method name="getAll" result="awards.getAllResultHandler(event)" fault="Controller.fault(event.toString())" />
 	</mx:RemoteObject>
 	
@@ -170,11 +32,13 @@
 	<mx:Canvas id="canvas" width="100%" height="100%" top="5" left="5" right="5" bottom="5">
 		<mx:TabNavigator width="100%" height="100%">
 			<mx:VBox label="Rejestr członków" icon="@Embed(source='..//icons/system-users.png')" height="100%" width="100%">
-				<mx:DataGrid id="grid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" doubleClickEnabled="true"
-					initialize="application1_initializeHandler(event)" change="selectHandler(event)"
-					itemEditEnd="grid_itemEditEndHandler(event)" itemDoubleClick="grid_itemDoubleClickHandler(event)">
+				<mx:DataGrid id="memberGrid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" doubleClickEnabled="true"
+					initialize="members.gridInitialize(event)" 
+					change="members.gridChangeHandler(event)"
+					itemEditEnd="members.gridItemEditEndHandler(event)" 
+					itemDoubleClick="members.gridItemDoubleClickHandler(event)">
 					<mx:columns>
-						<mx:DataGridColumn width="25"  editable="false" dataField="selected">
+						<mx:DataGridColumn width="25"  editable="false" >
 							<mx:itemRenderer>
 								<mx:Component>
 									<mx:CheckBox paddingLeft="5" click="data.selected = !data.selected"/>
@@ -204,23 +68,23 @@
 				<mx:ControlBar width="100%" height="41" >
 					<mx:Label text="Ilość obiektów"/>
 					<mx:TextInput width="40" text="{rowsCount}" enabled="false"/>
-					<mx:Button y="40" label="Dodaj członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="dodajCzlonka(event)">
+					<mx:Button y="40" label="Dodaj członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="members.showMemberForm(event)">
 						<mx:icon>@Embed(source='..//icons/user_add.png')</mx:icon>
 					</mx:Button>
-					<mx:Button y="40" label="Usuń członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="memberDeleteConfirm(event)">
+					<mx:Button y="40" label="Usuń członka" labelPlacement="right" right="10" left="10" cornerRadius="0" click="members.removeConfirm(event)">
 						<mx:icon>@Embed(source='..//icons/user_delete.png')</mx:icon>
 					</mx:Button>
-					<mx:Button y="40" label="Drukuj raport" labelPlacement="right" right="10" left="10" cornerRadius="0" click="views.Members.generateReport(event)">
+					<mx:Button y="40" label="Drukuj raport" labelPlacement="right" right="10" left="10" cornerRadius="0" click="members.generateReport(event)">
 						<mx:icon>@Embed(source='..//icons/page_white_acrobat.png')</mx:icon>
 					</mx:Button>
-					<mx:Button y="40" label="Dostosuj widok" labelPlacement="right" right="10" left="10" cornerRadius="0" click="views.Members.customizeView(event)">
+					<mx:Button y="40" label="Dostosuj widok" labelPlacement="right" right="10" left="10" cornerRadius="0" click="members.customizeView(event)">
 						<mx:icon>@Embed(source='..//icons/application_view_columns.png')</mx:icon>
 					</mx:Button>
 				</mx:ControlBar>
 			</mx:VBox>
 			<mx:VBox label="Odznaczenia"  icon="@Embed(source='..//icons/application-certificate.png')" height="100%" width="100%">
 				<mx:DataGrid id="awardGrid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" editable="true"
-							 initialize="awards.gridInitialize(event)" change="selectHandler(event)" doubleClickEnabled="true">
+							 initialize="awards.gridInitialize(event)" change="awards.gridChangeHandler(event)" doubleClickEnabled="true">
 					<mx:columns>
 						<mx:DataGridColumn dataField="name" headerText="Nazwa" editable="false" />
 					</mx:columns>

@@ -2,7 +2,7 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
 	<mx:Script>
 		<![CDATA[
-			import views.Members;
+			import mx.core.Application;
 		]]>
 	</mx:Script>
 	<mx:Form>
@@ -14,8 +14,8 @@
 			<mx:ComboBox id="membershipTypeInput">
 				<mx:ArrayCollection>
 					<mx:Object label="Czynny" data="C"/>
-					<mx:Object label="Wspierający" data="w"/>
-					<mx:Object label="Honorowy" data="C"/>
+					<mx:Object label="Wspierający" data="W"/>
+					<mx:Object label="Honorowy" data="H"/>
 				</mx:ArrayCollection>
 			</mx:ComboBox>
 		</mx:FormItem>
@@ -42,7 +42,7 @@
 		<mx:FormItem label="Uwagi"><mx:TextArea id="commentsInput"/></mx:FormItem>
 		
 		<mx:FormItem>
-			<mx:Button click="views.Members.addMember(event)" label="Dodaj"/>
+			<mx:Button click="Application.application.members.addMember(event)" label="Dodaj"/>
 		</mx:FormItem>
 	</mx:Form>
 	<mx:EmailValidator source="{emailInput}" property="text" 
