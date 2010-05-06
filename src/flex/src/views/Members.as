@@ -26,16 +26,13 @@ package views
 	{
 		/**
 		 * 
-		 * 
 		 */
 		public function Members()
 		{
 		}
 		
 		/**
-		 * 
 		 * @param event
-		 * 
 		 */
 		public static function addMember(event:MouseEvent):void
 		{
@@ -70,7 +67,6 @@ package views
 		/**
 		 * Generates PDF report in new browser window (probably download it)
 		 * @param event
-		 * 
 		 */
 		public static function generateReport(event:MouseEvent):void
 		{
@@ -79,14 +75,14 @@ package views
 			var sortCol:String = '';
 			var sortDir:String = 'ASC';
 			
-			for (var i in Application.application.grid.columns) {
+			for (var i:Object in Application.application.grid.columns) {
 				var col:DataGridColumn = Application.application.grid.columns[i] as DataGridColumn;
 				if (col.visible && col.dataField != null) {
 					columns.push("col[]=" + col.dataField);
 				}
 			}
 			
-			for (var i in Application.application.grid.dataProvider) {
+			for (i in Application.application.grid.dataProvider) {
 				var member:Member = Application.application.grid.dataProvider[i] as Member;
 				if (member.selected) {
 					primaryKeys.push("pk[]=" + member._id);
@@ -108,7 +104,6 @@ package views
 		/**
 		 * Customize view - displays popup where user can select columns to dispay @see  generateReport
 		 * @param event
-		 * 
 		 */
 		public static function customizeView(event:MouseEvent):void
 		{
@@ -118,7 +113,7 @@ package views
 			Application.application.window.addEventListener(CloseEvent.CLOSE, Application.application.removeMe);
 			
 			var form:Form = new Form();
-			for (var i in Application.application.grid.columns) {
+			for (var i:Object in Application.application.grid.columns) {
 				if (DataGridColumn(Application.application.grid.columns[i]).dataField) {
 					var item:FormItem = new FormItem();
 					item.label = DataGridColumn(Application.application.grid.columns[i]).headerText;
@@ -141,9 +136,9 @@ package views
 		 * @param event
 		 * 
 		 */
-		public static function toggleColumn(event:Event)
+		public static function toggleColumn(event:Event):void
 		{
-			for (var i in Application.application.grid.columns) {
+			for (var i:Object in Application.application.grid.columns) {
 				if (DataGridColumn(Application.application.grid.columns[i]).dataField == CheckBox(event.currentTarget).name) {
 					DataGridColumn(Application.application.grid.columns[i]).visible = CheckBox(event.currentTarget).selected;		
 					break;

@@ -5,6 +5,8 @@
 		<![CDATA[
 			import components.*;
 			
+			import controllers.*;
+			
 			import models.*;
 			
 			import mx.containers.TitleWindow;
@@ -24,6 +26,7 @@
 			
 			import views.*;
 			
+			
 			public var window:TitleWindow;
 			public var nameInput:TextInput = new TextInput();
 			public var surnameInput:TextInput = new TextInput();
@@ -31,6 +34,8 @@
 			public var birthDateInput:DateChooser = new DateChooser();
 			public var memberForm:MemberForm;
 			
+			public var awards:AwardsController   = new AwardsController(this as Application);
+			public var members:MembersController = new MembersController(this as Application); 
 			
 			[Bindable] 
 			public var rowsCount:Number = 0;
@@ -138,8 +143,8 @@
 			
 			protected function grid_itemEditEndHandler(event:DataGridEvent):void
 			{
-				var oldValue = Member(grid.selectedItem)[event.dataField];
-				var newValue = TextInput(event.currentTarget.itemEditorInstance).text;
+				var oldValue:String = Member(grid.selectedItem)[event.dataField];
+				var newValue:String = TextInput(event.currentTarget.itemEditorInstance).text;
 				if (newValue != oldValue) {
 					var memberToSave:Member = grid.selectedItem as Member;
 					memberToSave[event.dataField] = newValue;
@@ -153,12 +158,12 @@
 	</mx:Script>
 	
 	<mx:RemoteObject  id="membersRO" endpoint="" destination="Members">
-		<mx:method name="getAll" result="test_resultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
-		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
-		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="mx.controls.Alert.show(event.toString())"/>
+		<mx:method name="getAll" result="test_resultHandler(event)" fault="Controller.fault(event.toString())" />
+		<mx:method name="saveFromFlex" result="memberSaveResultHandler(event)" fault="Controller.fault(event.toString())"/>
+		<mx:method name="remove" result="memberDeleteResultHandler(event)" fault="Controller.fault(event.toString())"/>
 	</mx:RemoteObject>
 	<mx:RemoteObject  id="awardsRO" endpoint="" destination="Awards">
-		<mx:method name="getAll" result="Award.getAllResultHandler(event)" fault="mx.controls.Alert.show(event.toString())" />
+		<mx:method name="getAll" result="awards.getAllResultHandler(event)" fault="Controller.fault(event.toString())" />
 	</mx:RemoteObject>
 	
 
@@ -215,7 +220,7 @@
 			</mx:VBox>
 			<mx:VBox label="Odznaczenia"  icon="@Embed(source='..//icons/application-certificate.png')" height="100%" width="100%">
 				<mx:DataGrid id="awardGrid" width="100%" height="100%" columnWidth="20" allowMultipleSelection="true" editable="true"
-							 initialize="Award.gridInitialize(event)" change="selectHandler(event)" doubleClickEnabled="true">
+							 initialize="awards.gridInitialize(event)" change="selectHandler(event)" doubleClickEnabled="true">
 					<mx:columns>
 						<mx:DataGridColumn dataField="name" headerText="Nazwa" editable="false" />
 					</mx:columns>
